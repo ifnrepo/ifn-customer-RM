@@ -35,10 +35,25 @@
     <script src="<?= base_url().'assets/src' ?>/js/tabler.min.js?1692870487" defer></script>
     <script src="<?= base_url().'assets/src' ?>/js/demo.min.js?1692870487" defer></script>
     <script src="<?= base_url().'assets' ?>/js/vendor/tom-select.complete.js?1692870487" defer></script>
-    <script src="<?= base_url().'assets' ?>/js/myscript.js?1692870487" defer></script>
+	<?php if (ENVIRONMENT != 'development') { ?>
+		<script>
+			$(document).keydown(function(event) {
+				if (event.keyCode == 123) { // Prevent F12
+					return false;
+				} else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) { // Prevent Ctrl+Shift+I        
+					return false;
+				}
+			});
+			$(document).on("contextmenu", function(e) {
+				e.preventDefault();
+			});
+		</script>
+	<?php } ?>
+	<?php $updatejs = '1775880129'; ?>
+    <script src="<?= base_url().'assets' ?>/js/myscript.js?<?= $updatejs; ?>" defer></script>
 	
 	<?php if(isset($footer) && $footer['menu']=='produk'): ?>
-		<script src="<?= base_url().'assets' ?>/js/produk.js?1692870487" defer></script>
+		<script src="<?= base_url().'assets' ?>/js/produk.js?<?= $updatejs; ?>" defer></script>
 	<?php endif; ?>
     <script>
       // @formatter:off

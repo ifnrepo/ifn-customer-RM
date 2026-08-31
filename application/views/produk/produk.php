@@ -63,11 +63,19 @@
                                 </select>
                             </div>
                             <div class="col">
-
+                                
                             </div>
                         </div>
                     </div>
-                    <div class="col-6"></div>
+                    <div class="col-6 ms-auto">
+                        
+                    </div>
+                    <div class="col-3 text-end">
+                        <div class="input-group mt-1">
+                            <input type="text" class="form-control font-kecil" id="textcariproduk" placeholder="Search for…" value="<?= $this->session->userdata('cari-produk') ?>">
+                            <button class="btn btn-success font-kecil" id="btncariproduk" type="button">Cari !</button>
+                        </div>
+                    </div>
                 </div>
                 <table id="tabelnya" class="table table-hover table-bordered cell-border mt-2" style="width: 100% !important; border-collapse: collapse;"> <!-- table order-column table-hover table-bordered cell-border -->
                     <thead>
