@@ -53,6 +53,7 @@ class Produk extends CI_Controller {
 	public function addsession(){
 		$kode = isset($_POST['tipe']) ? $_POST['tipe'] : '';
 		$page = isset($_POST['page']) ? $_POST['page'] : '';
+		$cari = isset($_POST['text']) ? $_POST['text'] : '';
 		if($kode==''){
 			$this->session->unset_userdata('select-tipe');
 		}else{
@@ -62,6 +63,11 @@ class Produk extends CI_Controller {
 			$this->session->unset_userdata('perpage-produk');
 		}else{
 			$this->session->set_userdata('perpage-produk',$page);
+		}
+		if($cari==''){
+			$this->session->unset_userdata('cari-produk');
+		}else{
+			$this->session->set_userdata('cari-produk',$cari);
 		}
 		echo 1;
 	}

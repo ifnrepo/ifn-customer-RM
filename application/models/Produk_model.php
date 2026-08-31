@@ -57,6 +57,21 @@ class produk_model extends CI_Model
         $kode = $this->session->userdata('select-tipe');
         $this->db->select('tb_produk.*,kategori.nama_kategori');
         $this->db->join('kategori','kategori.kategori_id = tb_produk.kategori_id','left');
+        if($this->session->has_userdata('cari-produk') && $this->session->userdata('cari-produk')!=''){
+            $isi = $this->session->userdata('cari-produk');
+            if(str_contains(trim($isi)," ")){
+                $pisah = explode(" ",trim($isi));
+                $hasil = '';
+                foreach($pisah as $ps){
+                    $hasil .= $ps.'%';
+                }
+                $kata = substr($hasil,0,strlen($hasil)-1);
+            }else{
+                $kata = trim($isi);
+            }
+
+            $this->db->like('spesifikasi',$kata,'both', FALSE);
+        }
         if($kode!=''){
             $this->db->where('tb_produk.kategori_id',$kode);
         }
