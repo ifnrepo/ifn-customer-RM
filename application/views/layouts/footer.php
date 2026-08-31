@@ -49,11 +49,14 @@
 			});
 		</script>
 	<?php } ?>
-	<?php $updatejs = '1775880129'; ?>
+	<?php $updatejs = '1775880130'; ?>
     <script src="<?= base_url().'assets' ?>/js/myscript.js?<?= $updatejs; ?>" defer></script>
 	
 	<?php if(isset($footer) && $footer['menu']=='produk'): ?>
 		<script src="<?= base_url().'assets' ?>/js/produk.js?<?= $updatejs; ?>" defer></script>
+	<?php endif; ?>
+	<?php if(isset($footer) && $footer['menu']=='customer'): ?>
+		<script src="<?= base_url().'assets' ?>/js/customer.js?<?= $updatejs; ?>" defer></script>
 	<?php endif; ?>
     <script>
       // @formatter:off

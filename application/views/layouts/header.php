@@ -372,7 +372,7 @@
                           <a class="dropdown-item" href="<?= base_url().'produk/clear' ?>">
                             Produk
                           </a>
-                          <a class="dropdown-item" href="./accordion.html">
+                          <a class="dropdown-item" href="<?= base_url().'customer/clear' ?>">
                             Customer
                           </a>
                           <a class="dropdown-item" href="./blank.html">
