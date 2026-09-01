@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>Dashboard - CRM Indoneptune Net</title>
+    <title>CRM Indoneptune Net Manufacturing</title>
     <link href="<?= base_url(); ?>assets/favicon.ico" rel="icon">
     <!-- CSS files -->
     <link href="<?= base_url().'assets/src' ?>/css/tabler.min.css?1692870487" rel="stylesheet"/>
@@ -13,10 +13,10 @@
     <link href="<?= base_url().'assets/src' ?>/css/tabler-vendors.min.css?1692870487" rel="stylesheet"/>
     <link href="<?= base_url().'assets/src' ?>/css/demo.min.css?1692870487" rel="stylesheet"/>
     
-    <link href="<?= base_url().'assets/css' ?>/vendor/fontawesome/css/fontawesome.css?1692870487" rel="stylesheet"/>
     <link href="<?= base_url().'assets/css' ?>/vendor/tom-select.css?1692870487" rel="stylesheet"/>
-
+    
     <link href="<?= base_url().'assets/css' ?>/own-style.css?1692870487" rel="stylesheet"/>
+    <link href="<?= base_url().'assets/css' ?>/vendor/fontawesome/css/fontawesome.min.css?1692870487" rel="stylesheet"/>
     <style>
       .ui-autocomplete {
         z-index: 99999 !important;
@@ -350,7 +350,7 @@
                   <li class="nav-item <?php if(isset($header) && $header['menu']=='dashboard'){ echo "active"; } ?>">
                     <a class="nav-link" href="./" >
                       <span class="nav-link-icon d-md-none d-lg-inline-block">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-dashboard text-pink"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 13a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M13.45 11.55l2.05 -2.05" /><path d="M6.4 20a9 9 0 1 1 11.2 0l-11.2 0" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-dashboard <?php if(isset($header) && $header['menu']=='dashboard'){ echo "text-pink"; } ?>"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 13a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M13.45 11.55l2.05 -2.05" /><path d="M6.4 20a9 9 0 1 1 11.2 0l-11.2 0" /></svg>
                       </span>
                       <span class="nav-link-title text-black">
                         Dashboard
@@ -360,7 +360,7 @@
                   <li class="nav-item dropdown <?php if(isset($header) && $header['menu']=='master'){ echo "active"; } ?>">
                     <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                       <span class="nav-link-icon d-md-none d-lg-inline-block">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-database"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 6a8 3 0 1 0 16 0a8 3 0 1 0 -16 0" /><path d="M4 6v6a8 3 0 0 0 16 0v-6" /><path d="M4 12v6a8 3 0 0 0 16 0v-6" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-database <?php if(isset($header) && $header['menu']=='master'){ echo "text-pink"; } ?>"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 6a8 3 0 1 0 16 0a8 3 0 1 0 -16 0" /><path d="M4 6v6a8 3 0 0 0 16 0v-6" /><path d="M4 12v6a8 3 0 0 0 16 0v-6" /></svg>
                       </span>
                       <span class="nav-link-title">
                         Master Data
@@ -375,16 +375,16 @@
                           <a class="dropdown-item" href="<?= base_url().'customer/clear' ?>">
                             Customer
                           </a>
-                          <a class="dropdown-item" href="./blank.html">
+                          <!-- <a class="dropdown-item" href="./blank.html">
                             Blank
-                          </a>
+                          </a> -->
                         </div>
                       </div>
                     </div>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="./form-elements.html" >
-                      <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
+                  <li class="nav-item <?php if(isset($header) && $header['menu']=='hikiai'){ echo "active"; } ?>">
+                    <a class="nav-link" href="<?= base_url().'hikiai/clear' ?>" >
+                      <span class="nav-link-icon d-md-none d-lg-inline-block <?php if(isset($header) && $header['menu']=='hikiai'){ echo "text-pink"; } ?>"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11l3 3l8 -8" /><path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>
                       </span>
                       <span class="nav-link-title">

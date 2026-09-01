@@ -19,8 +19,14 @@ class Main extends CI_Controller {
 		$header['header'] = [
 			'menu' => 'dashboard'
 		];
+		$footer['footer'] = [
+			'menu' => 'main'
+		];
 		$this->load->view('layouts/header',$header);
 		$this->load->view('main');
-		$this->load->view('layouts/footer');
+		$this->load->view('layouts/footer',$footer);
+	}
+	public function ceknotif(){
+		echo 1;
 	}
 }
