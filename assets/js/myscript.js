@@ -796,16 +796,7 @@ function cekNotif() {
 		url: base_url + "main/ceknotif",
 		type: "POST",
 		success: function (data, textStatus, jqXHR) {
-			if (data != 0) {
-				if(data.includes("<html")){
-					window.location.reload();
-				}else{
-					$("#notiftask").removeClass("hilang");
-					document.getElementById("notiftask").innerHTML = data;
-				}
-			} else {
-				$("#notiftask").addClass("hilang");
-			}
+			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log(textStatus);

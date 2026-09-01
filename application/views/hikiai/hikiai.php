@@ -1,0 +1,132 @@
+<!-- Page header -->
+<div class="page-header d-print-none m-2">
+    <div class="container-xl">
+        <div class="row g-2 align-items-center">
+            <div class="col">
+                <div class="page-pretitle">
+                    Transaksi
+                </div>
+                <h2 class="page-title">
+                    Hikiai
+                </h2>
+            </div>
+            <div class="col-auto ms-auto d-print-none">
+                <div class="mb-0 row">
+                    <label class="col-5 col-form-label font-kecil">Exp/Dom</label>
+                    <div class="col">
+                        <select class="form-select font-kecil" id="select-tipe" name="select-tipe">
+                        <option value="">All</option>
+                        <option value="Export" <?php if($this->session->userdata('kode-hikiai')=='Export'){ echo "selected"; } ?>>Export</option>
+                        <option value="Domestic" <?php if($this->session->userdata('kode-hikiai')=='Domestic'){ echo "selected"; } ?>>Domestic</option>
+                      </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page body -->
+<div class="page-body mt-2">
+    <div class="container-xl">
+        <div class="card">
+            <div class="card-body p-2">
+                <div class="card card-active">
+                    <div class="card-body p-1">
+                        <div class="row">
+                            <div class="col-4"></div>
+                            <div class="col-4"></div>
+                            <div class="col-4 d-flex justify-content-end">
+                                <div class="row mt-1 font-kecil justify-content-end">
+                                    <label class="col-3 col-form-label text-end">Periode</label>
+                                    <div class="col d-flex">
+                                        <select id="bulan-hik" name="bulan-hik" class="form-select font-kecil me-1">
+                                            <option value="">Semua</option>
+                                            <option value="1" <?php if($this->session->userdata('bulan-hik')==1){ echo "selected"; } ?>>Januari</option>
+                                            <option value="2" <?php if($this->session->userdata('bulan-hik')==2){ echo "selected"; } ?>>Februari</option>
+                                            <option value="3" <?php if($this->session->userdata('bulan-hik')==3){ echo "selected"; } ?>>Maret</option>
+                                            <option value="4" <?php if($this->session->userdata('bulan-hik')==4){ echo "selected"; } ?>>April</option>
+                                            <option value="5" <?php if($this->session->userdata('bulan-hik')==5){ echo "selected"; } ?>>Mei</option>
+                                            <option value="6" <?php if($this->session->userdata('bulan-hik')==6){ echo "selected"; } ?>>Juni</option>
+                                            <option value="7" <?php if($this->session->userdata('bulan-hik')==7){ echo "selected"; } ?>>Juli</option>
+                                            <option value="8" <?php if($this->session->userdata('bulan-hik')==8){ echo "selected"; } ?>>Agustus</option>
+                                            <option value="9" <?php if($this->session->userdata('bulan-hik')==9){ echo "selected"; } ?>>September</option>
+                                            <option value="10" <?php if($this->session->userdata('bulan-hik')==10){ echo "selected"; } ?>>Oktober</option>
+                                            <option value="11" <?php if($this->session->userdata('bulan-hik')==11){ echo "selected"; } ?>>Nopember</option>
+                                            <option value="12" <?php if($this->session->userdata('bulan-hik')==12){ echo "selected"; } ?>>Desember</option>
+                                        </select>
+                                        <input type="text" name="tahun-hik" id="tahun-hik" class="form-control font-kecil me-1" value="<?= $this->session->userdata('tahun-hik') ?>">
+                                        <a href="#" class="btn btn-sm btn-success">Update</a>
+                                    </div>
+                                    <?php $cekdisable = $this->session->userdata('kode-hikiai')!='' ? '' : 'disabled'; ?>
+                                    <a href="<?= base_url().'hikiai\tambahdata' ?>" id="btntambahhikiai" data-bs-toggle="modal" data-bs-target="#modal-large-loading" data-title="Add Hikiai" class="btn btn-sm btn-primary mt-1 w-75 font-kecil <?= $cekdisable ?>">Tambah Data</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col-3">
+                        <div class="row mt-1 font-kecil">
+                            <label class="col-4 col-form-label">Per-page</label>
+                            <div class="col">
+                                <select id="perpage-hikiai" name="perpage-hikiai" class="form-select font-kecil">
+                                    <option value="15" <?php if($this->session->userdata('perpage-hikiai')==15){ echo "selected"; } ?>>15</option>
+                                    <option value="25" <?php if($this->session->userdata('perpage-hikiai')==25){ echo "selected"; } ?>>25</option>
+                                    <option value="50" <?php if($this->session->userdata('perpage-hikiai')==50){ echo "selected"; } ?>>50</option>
+                                    <option value="75" <?php if($this->session->userdata('perpage-hikiai')==75){ echo "selected"; } ?>>75</option>
+                                    <option value="100" <?php if($this->session->userdata('perpage-hikiai')==100){ echo "selected"; } ?>>100</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 ms-auto">
+                        
+                    </div>
+                    <div class="col-3 text-end">
+                        <div class="input-group mt-1">
+                            <input type="text" class="form-control font-kecil" id="textcarihikiai" placeholder="Cari data.." value="<?= $this->session->userdata('cari-hikiai') ?>">
+                            <button class="btn btn-success font-kecil" id="btncarihikiai" type="button">Cari !</button>
+                        </div>
+                    </div>
+                </div>
+                <table id="tabelnya" class="table table-hover table-bordered cell-border mt-2" style="width: 100% !important; border-collapse: collapse;"> <!-- table order-column table-hover table-bordered cell-border -->
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nomor</th>
+                            <th>Nomor Hikiai</th>
+                            <th>Customer</th>
+                            <th>Perihal</th>
+                            <th>Pcs</th>
+                            <th>Kgs</th>
+                            <th>Status</th>
+                            <th>Act</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-tbody" id="body-table" style="font-size: 13px !important; width: 100% !important;">
+                        <tr>
+                            <td class="text-center">1</td>
+                            <td class="font-kecil line-11"><span class="text-pink font-10">18-08-2026</span><br>MD 0613/VIII/26</td>
+                            <td class="font-kecil">MD 0613/MEGA DEWA LAUT/2026</td>
+                            <td class="font-kecil">MEGA DEWA LAUT CV</td>
+                            <td class="font-kecil">Estimasi Pengiriman Barang</td>
+                            <td class="text-end">1,390</td>
+                            <td class="text-end">-</td>
+                            <td class="font-kecil text-center"><span class="badge badge-outline text-dark">Input Data</span></td>
+                            <td class="text-center font-kecil">
+                                <a href="#" class="btn btn-primary btn-sm font-10">Edit</a>
+                            </td>
+                        </tr>
+                        <!-- <tr>
+                            <td colspan="8" class="text-center font-kecil">-- Tidak Ada Data --</td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
