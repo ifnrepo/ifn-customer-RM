@@ -31,6 +31,7 @@
     <script src="<?= base_url().'assets/src' ?>/libs/jsvectormap/dist/js/jsvectormap.min.js?1692870487" defer></script>
     <script src="<?= base_url().'assets/src' ?>/libs/jsvectormap/dist/maps/world.js?1692870487" defer></script>
     <script src="<?= base_url().'assets/src' ?>/libs/jsvectormap/dist/maps/world-merc.js?1692870487" defer></script>
+    <script src="<?= base_url().'assets/src' ?>/libs/litepicker/dist/litepicker.js?1692870487" defer></script>
     <!-- Tabler Core -->
     <script src="<?= base_url().'assets/src' ?>/js/tabler.min.js?1692870487" defer></script>
     <script src="<?= base_url().'assets/src' ?>/js/demo.min.js?1692870487" defer></script>

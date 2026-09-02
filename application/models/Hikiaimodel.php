@@ -31,8 +31,8 @@ class Hikiaimodel extends CI_Model
         $this->db->order_by('color');
         return $this->db->get('tb_color');
     }
-    public function simpanjala($data){
-        return $this->db->insert('tb_produk',$data);
+    public function simpanhikiai($data){
+        return $this->db->insert('tb_hikiai',$data);
     }
     public function editjala($data){
         // Cek kode terlebih dahulu 

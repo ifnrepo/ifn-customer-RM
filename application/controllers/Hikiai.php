@@ -56,15 +56,30 @@ class Hikiai extends CI_Controller {
 			foreach($data->result_array() as $dt): $no++;
 				$html .= '<tr>';
 				$html .= '<td>#'.$no.'</td>';
-				$html .= '<td class="font-kecil line-11"><span class="text-pink font-10">'.$dt['kode_customer'].'</span><br>'.$dt['buyer'].'-'.$dt['port'].'</td>';
+				$html .= '<td class="font-kecil line-11"><span class="text-pink font-10">'.$dt['kode_customer'].'</span><br>'.trim($dt['buyer']).'-'.$dt['port'].'</td>';
 				$html .= '<td class="font-kecil">'.$dt['alamat'].'</td>';
 				$html .= '<td class="text-center">';
-				$html .= '<a href="#" class="btn btn-success p-0 btn-flat font-kecil" id="pilihcustomer" rel="'.$dt['id'].'">Pilih</a>';
+				$html .= '<a href="#" class="btn btn-success p-0 btn-flat font-kecil" id="pilihcustomer" rel="'.$dt['id'].'" rel2="'.trim($dt['buyer']).'-'.$dt['port'].'" rel3="'.trim($dt['alamat']).'">Pilih</a>';
 				$html .= '</td>';
 				$html .= '</tr>';
 			endforeach;
 		}
 		$send = array('data' => $html, 'jml' => $data->num_rows());
 		echo json_encode($send);
+	}
+	public function simpanhikiai(){
+		$data = [
+			'kode' => strtoupper($_POST['kode']),
+			'tgl_hikiai' => tglmysql($_POST['tgl']),
+			'nomor' => strtoupper($_POST['nomor']),
+			'id_customer' => $_POST['idc'],
+			'perihal' => trim($_POST['peri']),
+			'kepada' => trim($_POST['kepa']),
+			'remark' => trim($_POST['kete']),
+			'dibuat_oleh' => $this->session->userdata('id'),
+			'exdo' => $this->session->userdata('kode-hikiai')
+		];
+		$qry = $this->hikiaimodel->simpanhikiai($data);
+		echo $qry;
 	}
 }
