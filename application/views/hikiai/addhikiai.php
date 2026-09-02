@@ -13,25 +13,34 @@
                 <div class="row mt-1">
                     <label class="col-3 col-form-label">No</label>
                     <div class="col">
-                        <input type="text" name="kode" id="kode" class="form-control font-kecil">
+                        <input type="text" name="kode" id="kode" class="form-control font-kecil text-uppercase font-bold">
                     </div>
                     <div class="col">
-                        <input type="text" name="tgl_hikiai" id="tgl_hikiai" class="form-control font-kecil">
+                        <div class="input-icon mb-2">
+                            <input class="form-control" placeholder="Pilih Tanggal" id="tgl_hikiai" value="<?= date('d-m-Y') ?>" readonly/>
+                            <span class="input-icon-addon">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M11 15h1" /><path d="M12 15v3" /></svg>
+                            </span>
+                        </div>
                     </div>
+                    
                 </div>
                 <div class="row mt-1">
                     <label class="col-3 col-form-label">Hikiai</label>
                     <div class="col">
-                       <input type="text" name="kode" id="kode" class="form-control font-kecil">
+                       <input type="text" name="nomor" id="nomor" class="form-control font-kecil text-uppercase font-bold">
                     </div>
                 </div>
                 <div class="row mt-1">
                     <label class="col-3 col-form-label">Customer</label>
                     <div class="col">
-                        <div class="input-group">
+                        <div class="input-group mb-1">
                             <input type="text" class="form-control font-kecil" id="textcaricustomer" placeholder="Cari data.." value="">
                             <button class="btn btn-success font-kecil" id="btncaricustomer" type="button">Cari !</button>
+                            <button class="btn btn-danger font-kecil hilang" id="btnhapuscustomer" type="button">Hapus !</button>
                         </div>
+                        <small class="form-hint mt-0 text-azure ms-1" id="alamatcustomer"></small>
+                        <input type="text" class="hilang" name="idcustomer" id="idcustomer">
                     </div>
                 </div>
                 <div class="row mt-1 hilang" id="divcaricustomer">
@@ -91,6 +100,19 @@
         //     allowEmptyOption: true
         // });
     // })
+    const picker = new Litepicker({
+        element: $('#tgl_hikiai')[0], // Extract the raw DOM element from jQuery object
+        // singleMode: false,
+        numberOfMonths: 1,
+        numberOfColumns: 1,
+        format: 'DD-MM-YYYY',
+        buttonText: {
+    			previousMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,
+                    nextMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
+                },
+    });
     $("#btncaricustomer").click(function(){
         $("#divcaricustomer").addClass('hilang');
         var str = $("#textcaricustomer").val();
@@ -123,7 +145,79 @@
                 },
             });
         }
-
+    })
+    $('#textcaricustomer').on('keypress', function(e) {
+        if (e.which == 13) {
+            $("#btncaricustomer").click();
+        }
+    });
+    $(document).on('click','#pilihcustomer',function(){
+        var tis = $(this).attr('rel');
+        var rel2 = $(this).attr('rel2');
+        var rel3 = $(this).attr('rel3');
+        $("#idcustomer").val(tis);
+        $("#textcaricustomer").val(rel2);
+        $("#alamatcustomer").html(rel3);
+        $("#btncaricustomer").addClass('hilang');
+        $("#btnhapuscustomer").removeClass('hilang');
+        $("#divcaricustomer").addClass('hilang');
+    })
+    $("#btnhapuscustomer").click(function(){
+        $("#idcustomer").val('');
+        $("#textcaricustomer").val('');
+        $("#alamatcustomer").html('');
+        $("#btncaricustomer").removeClass('hilang');
+        $("#btnhapuscustomer").addClass('hilang');
+        $("#textcaricustomer").focus();
+    })
+    $("#simpanhikiaihead").click(function(){
+        if($("#kode").val()==''){
+            alert('Kode Hikiai Harus di isi !');
+            return false;
+        }
+        alert('XX');
+        if($("#nomor").val()==''){
+            alert('Nomor Hikiai Harus di isi !');
+            return false;
+        }
+        if($("#tgl_hikiai").val()==''){
+            alert('Tanggal Hikiai Harus di isi !');
+            return false;
+        }
+        if($("#idcustomer").val()==''){
+            alert('Customer Harus di isi !');
+            return false;
+        }
+        if($("#kepada").val()==''){
+            alert('Kepada Harus di isi !');
+            return false;
+        }
+        if($("#perihal").val()==''){
+            alert('Perihal Harus di isi !');
+            return false;
+        }
+        $.ajax({
+            dataType: "json",
+            type: "POST",
+            url: base_url + "hikiai/simpanhikiai",
+            data: {
+                exdo: $("#select-tipe").val(),
+                kode: $("#kode").val(),
+                nomor: $("#nomor").val(),
+                tgl: $("#tgl_hikiai").val(),
+                idc: $("#idcustomer").val(),
+                peri: $("#perihal").val(),
+                kepa: $("#kepada").val(),
+                kete: $("#keterangan").val()
+            },
+            success: function (data) {
+                window.location.href = base_url+'hikiai';
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+            },
+        });
     })
     // setTimeout(() => {
     //     if($("#jnnet").val()==1){
