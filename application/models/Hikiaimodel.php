@@ -54,11 +54,11 @@ class Hikiaimodel extends CI_Model
         return $this->db->insert('tb_produk',$data);
     }
     public function getdata($limit=0,$start=0){
-        $kode = $this->session->userdata('select-tipe');
-        $this->db->select('tb_produk.*,kategori.nama_kategori');
-        $this->db->join('kategori','kategori.kategori_id = tb_produk.kategori_id','left');
-        if($this->session->has_userdata('cari-produk') && $this->session->userdata('cari-produk')!=''){
-            $isi = $this->session->userdata('cari-produk');
+        $kode = $this->session->unset_userdata('kode-hikiai');
+        $this->db->select('tb_hikiai.*,customer.nama_customer');
+        $this->db->join('customer','customer.id = tb_hikiai.id_customer','left');
+        if($this->session->has_userdata('cari-hikiai') && $this->session->userdata('cari-hikiai')!=''){
+            $isi = $this->session->userdata('cari-hikiai');
             if(str_contains(trim($isi)," ")){
                 $pisah = explode(" ",trim($isi));
                 $hasil = '';
@@ -70,29 +70,48 @@ class Hikiaimodel extends CI_Model
                 $kata = trim($isi);
             }
 
-            $this->db->like('spesifikasi',$kata,'both', FALSE);
+            $this->db->like('nomor',$kata,'both', FALSE);
         }
         if($kode!=''){
-            $this->db->where('tb_produk.kategori_id',$kode);
+            $this->db->where('tb_hikiai.exdo',$kode);
         }
-        $this->db->order_by('tb_produk.id');
+        $this->db->where('month(tgl_hikiai)',$this->session->userdata('bulan-hik'));
+        $this->db->where('year(tgl_hikiai)',$this->session->userdata('tahun-hik'));
+        $this->db->order_by('tb_hikiai.id');
         $this->db->limit($limit,$start);
-        return $this->db->get('tb_produk');
+        return $this->db->get('tb_hikiai');
     }
     public function countdata(){
-        $kode = $this->session->userdata('select-tipe');
-        $this->db->select('tb_produk.*,kategori.nama_kategori');
-        $this->db->join('kategori','kategori.kategori_id = tb_produk.kategori_id','left');
-        if($kode!=''){
-            $this->db->where('tb_produk.kategori_id',$kode);
+        $kode = $this->session->unset_userdata('kode-hikiai');
+        $this->db->select('tb_hikiai.*,customer.nama_customer');
+        $this->db->join('customer','customer.id = tb_hikiai.id_customer','left');
+        if($this->session->has_userdata('cari-hikiai') && $this->session->userdata('cari-hikiai')!=''){
+            $isi = $this->session->userdata('cari-hikiai');
+            if(str_contains(trim($isi)," ")){
+                $pisah = explode(" ",trim($isi));
+                $hasil = '';
+                foreach($pisah as $ps){
+                    $hasil .= $ps.'%';
+                }
+                $kata = substr($hasil,0,strlen($hasil)-1);
+            }else{
+                $kata = trim($isi);
+            }
+
+            $this->db->like('nomor',$kata,'both', FALSE);
         }
-        return $this->db->get('tb_produk')->num_rows();
+        if($kode!=''){
+            $this->db->where('tb_hikiai.exdo',$kode);
+        }
+        $this->db->where('month(tgl_hikiai)',$this->session->userdata('bulan-hik'));
+        $this->db->where('year(tgl_hikiai)',$this->session->userdata('tahun-hik'));
+        return $this->db->get('tb_hikiai')->num_rows();
     }
-    public function getprodukbyid($id){
-        $this->db->select('tb_produk.*,kategori.nama_kategori,kategori.kode_oth,kategori.net');
-        $this->db->join('kategori','kategori.kategori_id = tb_produk.kategori_id','left');
-        $this->db->where('tb_produk.id',$id);
-        return $this->db->get('tb_produk')->row_array();
+    public function getdatabyid($id){
+        $this->db->select('tb_hikiai.*,customer.id as idcustomer,customer.nama_customer,customer.alamat');
+        $this->db->join('customer','customer.id = tb_hikiai.id_customer','left');
+        $this->db->where('tb_hikiai.id',$id);
+        return $this->db->get('tb_hikiai')->row_array();
     }
     public function hapusdata($id){
         $this->db->where('id',$id);
@@ -114,5 +133,80 @@ class Hikiaimodel extends CI_Model
         $this->db->like('kode_customer',$kata,'both', FALSE);
         $this->db->or_like('buyer',$kata,'both', FALSE);
         return $this->db->get('customer');
+    }
+    public function getdataproduk($isi){
+        $kata = '';
+        if(str_contains(trim($isi)," ")){
+            $pisah = explode(" ",trim($isi));
+            $hasil = '';
+            foreach($pisah as $ps){
+                $hasil .= $ps.'%';
+            }
+            $kata = substr($hasil,0,strlen($hasil)-1);
+        }else{
+            $kata = trim($isi);
+        }
+        $this->db->select('tb_produk.*,kategori.nama_kategori');
+        $this->db->join('kategori','kategori.kategori_id = tb_produk.kategori_id','left');
+        $this->db->like('tb_produk.kode',$kata,'both', FALSE);
+        $this->db->or_like('tb_produk.spesifikasi',$kata,'both', FALSE);
+        $this->db->limit(10);
+        return $this->db->get('tb_produk');
+    }
+    public function simpandetailhikiai($data){
+        for ($i=1; $i < 20; $i++) { 
+            $cekitem = $this->db->get_where('tb_hikiai_detail',['id_hikiai' => $data['id_hikiai'],'item' => $i])->num_rows();
+            if($cekitem==0){
+                $data['item'] = (int) $i;
+                $i=21;
+            }
+        }
+
+        return $this->db->insert('tb_hikiai_detail',$data);
+    }
+    public function updatedetailhikiai($data){
+        $id = $data['id'];
+        unset($data['id']);
+        $this->db->where('id',$id);
+        return $this->db->update('tb_hikiai_detail',$data);
+    }
+    public function hapusdetailhikiai($id){
+        $this->db->where('id',$id);
+        return $this->db->delete('tb_hikiai_detail');
+    }
+    public function getdatadetail($id){
+        $this->db->select('tb_hikiai_detail.*,tb_produk.spesifikasi,tb_produk.kode,satuan.kodesatuan');
+        $this->db->join('tb_produk','tb_produk.id = tb_hikiai_detail.id_produk','left');
+        $this->db->join('satuan','satuan.id = tb_hikiai_detail.id_satuan','left');
+        $this->db->order_by('tb_hikiai_detail.item');
+        return $this->db->get('tb_hikiai_detail');
+    }
+    public function getsatuan(){
+        return $this->db->order_by('kodesatuan')->get('satuan');
+    }
+    public function simpandatahikiai($id){
+        $this->db->select('sum(pcs) as pcs,sum(kgs) as kgs');
+        $this->db->from('tb_hikiai_detail');
+        $this->db->where('id_hikiai',$id);
+        $jmlhik = $this->db->get()->row_array();
+
+        $this->db->where('id',$id);
+        return $this->db->update('tb_hikiai',['pcs' => $jmlhik['pcs'],'kgs' => $jmlhik['kgs'],'status_hikiai' => 1]);
+    }
+    public function editbatalhikiai($id){
+        $this->db->where('id',$id);
+        return $this->db->update('tb_hikiai',['pcs' => 0,'kgs' => 0,'status_hikiai' => 0]);
+    }
+    public function resetdetailhikiai($id){
+        $this->db->where('id_hikiai',$id);
+        return $this->db->delete('tb_hikiai_detail');
+    }
+    public function getdetailhikiaibyid($id){
+        $this->db->select('tb_hikiai_detail.*,tb_produk.spesifikasi,kategori.nama_kategori');
+        $this->db->from('tb_hikiai_detail');
+        $this->db->join('tb_produk','tb_produk.id = tb_hikiai_detail.id_produk','left');
+        $this->db->join('kategori','kategori.kategori_id = tb_produk.kategori_id','left');
+        $this->db->where('tb_hikiai_detail.id',$id);
+        return $this->db->get()->row_array();
     }
 }
