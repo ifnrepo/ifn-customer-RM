@@ -93,7 +93,7 @@
                         </div>
                     </div>
                 </div>
-                <table id="tabelnya" class="table table-hover table-bordered cell-border mt-2" style="width: 100% !important; border-collapse: collapse;"> <!-- table order-column table-hover table-bordered cell-border -->
+                <table id="tabelnya" class="table table-hover table-bordered cell-border mt-2 mb-0" style="width: 100% !important; border-collapse: collapse;"> <!-- table order-column table-hover table-bordered cell-border -->
                     <thead>
                         <tr>
                             <th>No</th>
@@ -108,24 +108,77 @@
                         </tr>
                     </thead>
                     <tbody class="table-tbody" id="body-table" style="font-size: 13px !important; width: 100% !important;">
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="font-kecil line-11"><span class="text-pink font-10">18-08-2026</span><br>MD 0613/VIII/26</td>
-                            <td class="font-kecil">MD 0613/MEGA DEWA LAUT/2026</td>
-                            <td class="font-kecil">MEGA DEWA LAUT CV</td>
-                            <td class="font-kecil">Estimasi Pengiriman Barang</td>
-                            <td class="text-end">1,390</td>
-                            <td class="text-end">-</td>
-                            <td class="font-kecil text-center"><span class="badge badge-outline text-dark">Input Data</span></td>
-                            <td class="text-center font-kecil">
-                                <a href="#" class="btn btn-primary btn-sm font-10">Edit</a>
-                            </td>
-                        </tr>
-                        <!-- <tr>
-                            <td colspan="8" class="text-center font-kecil">-- Tidak Ada Data --</td>
-                        </tr> -->
+                        <?php if($data->num_rows() > 0): ?>
+                            <?php $no= ($this->uri->segment(3)) ? $this->uri->segment(3) : 0; foreach($data->result_array() as $dt): $no++; ?>
+                            <?php 
+                                switch ($dt['status_hikiai']) {
+                                    case 0:
+                                        $strstat = 'Input Data';
+                                        $badgestat = 'badge badge-outline text-dark';
+                                        break;
+                                    case 1:
+                                        $strstat = 'Selesai Input';
+                                        $badgestat = 'badge bg-blue text-blue-fg';
+                                        break;
+                                    case 2:
+                                        $strstat = 'Kirim PPIC';
+                                        $badgestat = 'badge badge-outline text-pink';
+                                        break;
+                                    case 3:
+                                        $strstat = 'Hitung PPIC';
+                                        $badgestat = 'badge bg-pink text-pink-fg';
+                                        break;
+                                    case 4:
+                                        $strstat = 'Limit Diterima';
+                                        $badgestat = 'badge bg-green text-green-fg';
+                                        break;
+                                    case 5:
+                                        $strstat = 'Closed';
+                                        $badgestat = 'badge';
+                                        break;
+                                    case 6:
+                                        $strstat = 'Cancel';
+                                        $badgestat = 'badge bg-red text-red-fg';
+                                        break;
+                                    default:
+                                        # code...
+                                        break;
+                                }
+                             ?>
+                                <tr>
+                                    <td class="text-center">#<?= $no ?></td>
+                                    <td class="font-kecil line-11"><span class="text-pink font-10"><?= tglmysql($dt['tgl_hikiai']) ?></span><br><?= $dt['kode'] ?></td>
+                                    <td class="font-kecil"><?= $dt['nomor'] ?></td>
+                                    <td class="font-kecil"><?= $dt['nama_customer'] ?></td>
+                                    <td class="font-kecil"><?= $dt['perihal'] ?></td>
+                                    <td class="text-end"><?= rupiah($dt['pcs'],0) ?></td>
+                                    <td class="text-end"><?= rupiah($dt['kgs'],2) ?></td>
+                                    <td class="font-kecil text-center"><span class="<?= $badgestat ?>"><?= $strstat ?></span></td>
+                                    <td class="text-center font-kecil">
+                                        <?php if($dt['status_hikiai']==0){ ?>
+                                            <a href="<?= base_url().'hikiai/edithikiai/'.$dt['id'] ?>" class="btn btn-primary btn-sm font-10">Edit</a>
+                                        <?php }elseif($dt['status_hikiai']==1){ ?>
+                                            <a href="#" data-href="<?= base_url().'hikiai/editbatalhikiai/'.$dt['id'] ?>" data-bs-toggle="modal" data-bs-target="#modal-info" data-message="Akan mengedit data ini" class="btn btn-primary btn-sm font-10">Edit</a>
+                                            <a href="#" data-href="<?= base_url().'hikiai/kirimppic/'.$dt['id'] ?>" data-bs-toggle="modal" data-bs-target="#modal-info" data-message="Kirim ke PPIC untuk Hitung Delivery Time" class="btn btn-success btn-sm font-10">Kirim PPIC</a>
+                                        <?php } ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="9" class="text-center font-kecil">-- Tidak Ada Data --</td>
+                            </tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-between mt-1">
+                    <div class="mt-1 font-kecil">
+                        Jumlah Record <?= rupiah($jumlahrek,0) ?>
+                    </div>
+                    <div class="font-kecil">    
+                        <?= $links; ?>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

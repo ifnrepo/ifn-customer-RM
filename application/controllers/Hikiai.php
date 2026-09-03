@@ -16,10 +16,22 @@ class Hikiai extends CI_Controller {
     }
 	public function index()
 	{
+		$config['base_url'] = base_url().'hikiai/index'; // The URL to your controller method
+        $config['total_rows'] = $this->hikiaimodel->countdata(); // Total records in your table
+        $config['per_page'] = $this->session->userdata('perpage-hikiai')=='' ? 15 : $this->session->userdata('perpage-hikiai'); // Records per page
+        $config['uri_segment'] = 3; // Which URL segment contains the page number
+        $config['attributes'] = array('class' => 'page-link');
+
+        $this->pagination->initialize($config);
+        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
 		$header['header'] = [
 			'menu' => 'hikiai'
 		];
-		$data['data'] = [
+		$data = [
+			'data' => $this->hikiaimodel->getdata($config['per_page'],$page),
+			'jumlahrek' => $this->hikiaimodel->countdata(),
+			'links' => $this->pagination->create_links()
 		];
 		$footer['footer'] = [
 			'menu' => 'hikiai'
@@ -67,6 +79,25 @@ class Hikiai extends CI_Controller {
 		$send = array('data' => $html, 'jml' => $data->num_rows());
 		echo json_encode($send);
 	}
+	public function getdataproduk(){
+		$kode = $_POST['isi'];
+		$data = $this->hikiaimodel->getdataproduk($kode);
+		$html = '';
+		if($data->num_rows() > 0){ $no=0;
+			foreach($data->result_array() as $dt): $no++;
+				$html .= '<tr>';
+				$html .= '<td>#'.$no.'</td>';
+				$html .= '<td class="font-kecil line-11"><span class="text-pink font-10">'.$dt['kode'].'</span><br>'.trim($dt['spesifikasi']).'</td>';
+				$html .= '<td class="font-kecil">'.$dt['nama_kategori'].'</td>';
+				$html .= '<td class="text-center">';
+				$html .= '<a href="#" class="btn btn-success p-0 btn-flat font-kecil" id="pilihproduk" rel="'.$dt['id'].'" rel2="'.trim($dt['spesifikasi']).'" rel3="'.trim($dt['nama_kategori']).'">Pilih</a>';
+				$html .= '</td>';
+				$html .= '</tr>';
+			endforeach;
+		}
+		$send = array('data' => $html, 'jml' => $data->num_rows());
+		echo json_encode($send);
+	}
 	public function simpanhikiai(){
 		$data = [
 			'kode' => strtoupper($_POST['kode']),
@@ -81,5 +112,85 @@ class Hikiai extends CI_Controller {
 		];
 		$qry = $this->hikiaimodel->simpanhikiai($data);
 		echo $qry;
+	}
+	public function simpandatahikiai($id){
+		$qry = $this->hikiaimodel->simpandatahikiai($id);
+		if($qry){
+			$url = base_url().'hikiai';
+			redirect($url);
+		}
+	}
+	public function edithikiai($id){
+		$header['header'] = [
+			'menu' => 'hikiai'
+		];
+		$data = [
+			'data' => $this->hikiaimodel->getdatabyid($id),
+			'datadetail' => $this->hikiaimodel->getdatadetail($id)
+		];
+		$footer['footer'] = [
+			'menu' => 'hikiai'
+		];
+		$this->load->view('layouts/header',$header);
+		$this->load->view('hikiai/edithikiai',$data);
+		$this->load->view('layouts/footer',$footer);
+	}
+	public function adddetailhikiai($id){
+		$data = [
+			'satuan' => $this->hikiaimodel->getsatuan()
+		];
+		$this->load->view('hikiai\adddetailhikiai',$data);
+	}
+	public function editdetailhikiai($id){
+		$data = [
+			'data' => $this->hikiaimodel->getdetailhikiaibyid($id),
+			'satuan' => $this->hikiaimodel->getsatuan()
+		];
+		$this->load->view('hikiai\editdetailhikiai',$data);
+	}
+	public function simpandetailhikiai(){
+		$data = [
+			'id_hikiai' => $_POST['idhik'],
+			'id_produk' => $_POST['idprod'],
+			'pcs' => toAngka($_POST['pcs']),
+			'kgs' => toAngka($_POST['kgs']),
+			'keterangan' => $_POST['kete'],
+			'id_satuan' => $_POST['sat']
+		];
+		$qry = $this->hikiaimodel->simpandetailhikiai($data);
+		echo $qry;
+	}
+	public function updatedetailhikiai(){
+		$data = [
+			'id' => $_POST['id'],
+			'id_produk' => $_POST['idprod'],
+			'pcs' => toAngka($_POST['pcs']),
+			'kgs' => toAngka($_POST['kgs']),
+			'keterangan' => $_POST['kete'],
+			'id_satuan' => $_POST['sat']
+		];
+		$qry = $this->hikiaimodel->updatedetailhikiai($data);
+		echo $qry;
+	}
+	public function hapusdetailhikiai($id,$hd){
+		$qry = $this->hikiaimodel->hapusdetailhikiai($id);
+		if($qry){
+			$url = base_url().'hikiai/edithikiai/'.$hd;
+			redirect($url);
+		}
+	}
+	public function editbatalhikiai($id){
+		$qry = $this->hikiaimodel->editbatalhikiai($id);
+		if($qry){
+			$url = base_url().'hikiai/edithikiai/'.$id;
+			redirect($url);
+		}
+	}
+	public function resetdetailhikiai($id){
+		$qry = $this->hikiaimodel->resetdetailhikiai($id);
+		if($qry){
+			$url = base_url().'hikiai/edithikiai/'.$id;
+			redirect($url);
+		}
 	}
 }
