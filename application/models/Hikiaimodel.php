@@ -32,7 +32,8 @@ class Hikiaimodel extends CI_Model
         return $this->db->get('tb_color');
     }
     public function simpanhikiai($data){
-        return $this->db->insert('tb_hikiai',$data);
+        $this->db->insert('tb_hikiai',$data);
+        return $this->db->insert_id();
     }
     public function editjala($data){
         // Cek kode terlebih dahulu 
@@ -54,7 +55,7 @@ class Hikiaimodel extends CI_Model
         return $this->db->insert('tb_produk',$data);
     }
     public function getdata($limit=0,$start=0){
-        $kode = $this->session->unset_userdata('kode-hikiai');
+        $kode = $this->session->userdata('kode-hikiai');
         $this->db->select('tb_hikiai.*,customer.nama_customer');
         $this->db->join('customer','customer.id = tb_hikiai.id_customer','left');
         if($this->session->has_userdata('cari-hikiai') && $this->session->userdata('cari-hikiai')!=''){
@@ -82,7 +83,7 @@ class Hikiaimodel extends CI_Model
         return $this->db->get('tb_hikiai');
     }
     public function countdata(){
-        $kode = $this->session->unset_userdata('kode-hikiai');
+        $kode = $this->session->userdata('kode-hikiai');
         $this->db->select('tb_hikiai.*,customer.nama_customer');
         $this->db->join('customer','customer.id = tb_hikiai.id_customer','left');
         if($this->session->has_userdata('cari-hikiai') && $this->session->userdata('cari-hikiai')!=''){
@@ -113,9 +114,14 @@ class Hikiaimodel extends CI_Model
         $this->db->where('tb_hikiai.id',$id);
         return $this->db->get('tb_hikiai')->row_array();
     }
-    public function hapusdata($id){
+    public function hapushikiai($id){
+        $this->db->trans_start();
+        $this->db->where('id_hikiai',$id);
+        $this->db->delete('tb_hikiai_detail');
+        
         $this->db->where('id',$id);
-        return $this->db->delete('tb_produk');
+        $this->db->delete('tb_hikiai');
+        return $this->db->trans_complete();
     }
     public function getdatacustomer($isi){
         $kata = '';
@@ -178,6 +184,7 @@ class Hikiaimodel extends CI_Model
         $this->db->select('tb_hikiai_detail.*,tb_produk.spesifikasi,tb_produk.kode,satuan.kodesatuan');
         $this->db->join('tb_produk','tb_produk.id = tb_hikiai_detail.id_produk','left');
         $this->db->join('satuan','satuan.id = tb_hikiai_detail.id_satuan','left');
+        $this->db->where('tb_hikiai_detail.id_hikiai',$id);
         $this->db->order_by('tb_hikiai_detail.item');
         return $this->db->get('tb_hikiai_detail');
     }
@@ -207,6 +214,39 @@ class Hikiaimodel extends CI_Model
         $this->db->join('tb_produk','tb_produk.id = tb_hikiai_detail.id_produk','left');
         $this->db->join('kategori','kategori.kategori_id = tb_produk.kategori_id','left');
         $this->db->where('tb_hikiai_detail.id',$id);
+        return $this->db->get()->row_array();
+    }
+    public function kirimppic($id){
+        $this->db->where('id',$id);
+        $qry =  $this->db->update('tb_hikiai',['dikirim_oleh' => $this->session->userdata('id'),'dikirim_pada' => date('Y-m-d H:i:s'),'status_hikiai' => 2]);
+        if($qry){
+            $this->session->set_flashdata('jeniserror',1);
+            $this->session->set_flashdata('pesanerror','Data berhasil diupdate !');
+        }else{
+            $this->session->set_flashdata('jeniserror',2);
+            $this->session->set_flashdata('pesanerror','Data gagal diupdate !');
+        }
+        return true;
+    }
+    public function simpanremarkhikiai($data){
+        $fiel = 'remark_'.trim($data['idrem']);
+        $fiel2 = 'remark_teks_'.trim($data['idrem']);
+
+        $isi = [
+            $fiel => $data['judul'],
+            $fiel2 => $data['isi']
+        ];
+
+        $this->db->where('id',$data['idhik']);
+        return $this->db->update('tb_hikiai',$isi);
+    }
+    public function getremarkbyid($id,$hik){
+        $fiel = 'remark_'.trim($id);
+        $fiel2 = 'remark_teks_'.trim($id);
+
+        $this->db->select($fiel.' as teks1,'.$fiel2.' as isi1');
+        $this->db->from('tb_hikiai');
+        $this->db->where('id',$hik);
         return $this->db->get()->row_array();
     }
 }

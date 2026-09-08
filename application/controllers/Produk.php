@@ -104,8 +104,8 @@ class Produk extends CI_Controller {
 			'mesh' => $_POST['mesh'],
 			'length' => $_POST['len'],
 			'st_length' => $_POST['satlen'],
-			'color' => $_POST['color'],
-			'ways' => $_POST['ways'],
+			'color' => trim($_POST['color']),
+			'ways' => trim($_POST['ways']),
 			'keterangan' => $_POST['ket'],
 			'spesifikasi' => $_POST['spek']
 		];
@@ -125,8 +125,8 @@ class Produk extends CI_Controller {
 			'mesh' => $_POST['mesh'],
 			'length' => $_POST['len'],
 			'st_length' => $_POST['satlen'],
-			'color' => $_POST['color'],
-			'ways' => $_POST['ways'],
+			'color' => trim($_POST['color']),
+			'ways' => trim($_POST['ways']),
 			'keterangan' => $_POST['ket'],
 			'spesifikasi' => $_POST['spek']
 		];

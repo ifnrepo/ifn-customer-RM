@@ -50,11 +50,15 @@ class Hikiai extends CI_Controller {
 	}
 	public function addsession(){
 		$tipe = isset($_POST['tipe']) ? $_POST['tipe'] : 0;
+		$bulan = isset($_POST['bul']) ? $_POST['bul'] : date('m');
+		$tahun = isset($_POST['tah']) ? $_POST['tah'] : date('Y');
 		if($tipe!=0){
 			$this->session->set_userdata('kode-hikiai',$tipe);
 		}else{
 			$this->session->unset_userdata('kode-hikiai');
 		}
+		$this->session->set_userdata('bulan-hik',$bulan);
+		$this->session->set_userdata('tahun-hik',$tahun);
 		echo 1;
 	}
 	public function tambahdata(){
@@ -135,6 +139,13 @@ class Hikiai extends CI_Controller {
 		$this->load->view('hikiai/edithikiai',$data);
 		$this->load->view('layouts/footer',$footer);
 	}
+	public function hapushikiai($id){
+		$qry = $this->hikiaimodel->hapushikiai($id);
+		if($qry){
+			$url = base_url().'hikiai';
+			redirect($url);
+		}
+	}
 	public function adddetailhikiai($id){
 		$data = [
 			'satuan' => $this->hikiaimodel->getsatuan()
@@ -192,5 +203,37 @@ class Hikiai extends CI_Controller {
 			$url = base_url().'hikiai/edithikiai/'.$id;
 			redirect($url);
 		}
+	}
+	public function viewdetail($id){
+		$data = [
+			'data' => $this->hikiaimodel->getdatabyid($id),
+			'datadetail' => $this->hikiaimodel->getdatadetail($id)
+		];
+		$this->load->view('hikiai\viewdetail',$data);
+	}
+	public function kirimppic($id){
+		$qry = $this->hikiaimodel->kirimppic($id);
+		if($qry){
+			$url = base_url().'hikiai';
+			redirect($url);
+		}
+	}
+	public function addremark($id,$hik){
+		$data = [
+			'idrem' => $id,
+			'idhik' => $hik,
+			'data' => $this->hikiaimodel->getremarkbyid($id,$hik)
+		];
+		$this->load->view('hikiai\addremark',$data);
+	}
+	public function simpanremarkhikiai(){
+		$data = [ 
+			'idhik' => $_POST['idhik'],
+			'idrem' => $_POST['idrem'],
+			'judul' => strtoupper($_POST['rem']),
+			'isi' => $_POST['teks']
+		];
+
+		echo $this->hikiaimodel->simpanremarkhikiai($data);
 	}
 }

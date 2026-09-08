@@ -1,93 +1,24 @@
 <div class="container-xl">
     <div class="card p-1">
         <div class="card-body p-1">
-            <!-- <div class="d-flex justify-content-between">
-                <div id="titlenet"><h3>Jenis Jaring</h3></div>
-                <div class="line-11">
-                    <div id="kodenet" class="line-11"><h3 class="text-red m-0"></h3></div>
-                    <div class="text-end font-kecil" id="speku">XXXX</div>
-                </div>
-            </div> -->
-            <!-- <hr class="m-0"> -->
+            <input type="text" id="idremark" class="hilang" value="<?= $idrem ?>">
+            <input type="text" id="idhik" class="hilang" value="<?= $idhik  ?>">
             <div id="addjaring" class="">
                 <div class="row mt-1">
-                    <label class="col-3 col-form-label">No</label>
+                    <label class="col-3 col-form-label">Noted</label>
                     <div class="col">
-                        <input type="text" name="kode" id="kode" class="form-control font-kecil text-uppercase font-bold">
-                    </div>
-                    <div class="col">
-                        <div class="input-icon mb-2">
-                            <input class="form-control" placeholder="Pilih Tanggal" id="tgl_hikiai" value="<?= date('d-m-Y') ?>" readonly/>
-                            <span class="input-icon-addon">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M11 15h1" /><path d="M12 15v3" /></svg>
-                            </span>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="row mt-1">
-                    <label class="col-3 col-form-label">Hikiai</label>
-                    <div class="col">
-                       <input type="text" name="nomor" id="nomor" class="form-control font-kecil text-uppercase font-bold">
-                    </div>
-                </div>
-                <div class="row mt-1">
-                    <label class="col-3 col-form-label">Customer</label>
-                    <div class="col">
-                        <div class="input-group mb-1">
-                            <input type="text" class="form-control font-kecil" id="textcaricustomer" placeholder="Cari data.." value="">
-                            <button class="btn btn-success font-kecil" id="btncaricustomer" type="button">Cari !</button>
-                            <button class="btn btn-danger font-kecil hilang" id="btnhapuscustomer" type="button">Hapus !</button>
-                        </div>
-                        <small class="form-hint mt-0 text-azure ms-1" id="alamatcustomer"></small>
-                        <input type="text" class="hilang" name="idcustomer" id="idcustomer">
-                    </div>
-                </div>
-                <div class="row mt-1 hilang" id="divcaricustomer">
-                    <div class="col">
-                        <table id="tabelnya" class="table table-hover table-bordered cell-border mt-0" style="width: 100% !important; border-collapse: collapse;"> <!-- table order-column table-hover table-bordered cell-border -->
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Supplier</th>
-                                    <th>Alamat</th>
-                                    <th>Act</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-tbody" id="body-table-cust" style="font-size: 13px !important; width: 100% !important;">
-                                <tr>
-                                    <td>#1</td>
-                                    <td class="font-kecil line-11"><span class="text-pink font-10">CSS1234568</span><br>Nama Supplier</td>
-                                    <td class="font-kecil">Alamat Supplier</td>
-                                    <td class="text-center">
-                                        <a href="#" class="btn btn-success p-0 btn-flat font-kecil">Pilih</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="row mt-1">
-                    <label class="col-3 col-form-label">Kepada</label>
-                    <div class="col">
-                       <input type="text" name="kepada" id="kepada" class="form-control font-kecil">
-                    </div>
-                </div>
-                <div class="row mt-1">
-                    <label class="col-3 col-form-label">Perihal</label>
-                    <div class="col">
-                       <input type="text" name="perihal" id="perihal" class="form-control font-kecil">
+                       <input type="text" name="teks" id="teks" class="form-control font-kecil text-uppercase" value="<?= $data['teks1'] ?>">
                     </div>
                 </div>
                 <div class="row my-1">
-                    <label class="col-3 col-form-label">Keterangan</label>
+                    <label class="col-3 col-form-label">Remark</label>
                     <div class="col">
-                        <textarea name="keterangan" id="keterangan" class="form-control font-kecil" rows="8"></textarea>
+                        <textarea name="remark" id="remark" class="form-control font-kecil" rows="8"><?= $data['isi1'] ?></textarea>
                     </div>
                 </div>
                 <hr class="m-0">
                 <div class="text-center mt-1">
-                    <a href="#" class="btn btn-sm btn-success font-kecil" id="simpanhikiaihead"><span class="text-black">Simpan</span></a>
+                    <a href="#" class="btn btn-sm btn-success font-kecil" id="simpanremark"><span class="text-black">Simpan</span></a>
                     <a href="#" class="btn btn-sm btn-danger font-kecil" data-bs-dismiss="modal">Batal</a>
                 </div>
             </div>
@@ -95,122 +26,29 @@
     </div>
 </div>
 <script>
-    // $(document).ready(function(){
-        // new TomSelect("#color",{
-        //     allowEmptyOption: true
-        // });
-    // })
-    const picker = new Litepicker({
-        element: $('#tgl_hikiai')[0], // Extract the raw DOM element from jQuery object
-        // singleMode: false,
-        numberOfMonths: 1,
-        numberOfColumns: 1,
-        format: 'DD-MM-YYYY',
-        buttonText: {
-    			previousMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,
-                    nextMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
-                },
-    });
-    $("#btncaricustomer").click(function(){
-        $("#divcaricustomer").addClass('hilang');
-        var str = $("#textcaricustomer").val();
-        var lebar = str.trim().length;
-        var kata = str.trim();
-        if(lebar < 4){
-            alert('Minimal 4 huruf dalam pencarian kata !');
-        }else{
-            $.ajax({
-                dataType: "json",
-                type: "POST",
-                url: base_url + "hikiai/getdatacustomer",
-                data: {
-                    isi: kata
-                },
-                success: function (data) {
-                    // alert(data);
-                    // window.location.href = base_url+'produk';
-                    if(data.jml != 0){
-                        $("#divcaricustomer").removeClass('hilang');
-                        $("#body-table-cust").html(data.data).show();
-                    }else{
-                        alert('Data tidak ditemukan');
-                    }
-                    // $("#ukuran-benang").html(data.hasil).show();
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(thrownError);
-                },
-            });
-        }
-    })
-    $('#textcaricustomer').on('keypress', function(e) {
-        if (e.which == 13) {
-            $("#btncaricustomer").click();
-        }
-    });
-    $(document).on('click','#pilihcustomer',function(){
-        var tis = $(this).attr('rel');
-        var rel2 = $(this).attr('rel2');
-        var rel3 = $(this).attr('rel3');
-        $("#idcustomer").val(tis);
-        $("#textcaricustomer").val(rel2);
-        $("#alamatcustomer").html(rel3);
-        $("#btncaricustomer").addClass('hilang');
-        $("#btnhapuscustomer").removeClass('hilang');
-        $("#divcaricustomer").addClass('hilang');
-    })
-    $("#btnhapuscustomer").click(function(){
-        $("#idcustomer").val('');
-        $("#textcaricustomer").val('');
-        $("#alamatcustomer").html('');
-        $("#btncaricustomer").removeClass('hilang');
-        $("#btnhapuscustomer").addClass('hilang');
-        $("#textcaricustomer").focus();
-    })
-    $("#simpanhikiaihead").click(function(){
-        if($("#kode").val()==''){
-            alert('Kode Hikiai Harus di isi !');
-            return false;
-        }
-        if($("#nomor").val()==''){
-            alert('Nomor Hikiai Harus di isi !');
-            return false;
-        }
-        if($("#tgl_hikiai").val()==''){
-            alert('Tanggal Hikiai Harus di isi !');
-            return false;
-        }
-        if($("#idcustomer").val()==''){
-            alert('Customer Harus di isi !');
-            return false;
-        }
-        if($("#kepada").val()==''){
-            alert('Kepada Harus di isi !');
-            return false;
-        }
-        if($("#perihal").val()==''){
-            alert('Perihal Harus di isi !');
-            return false;
-        }
+    $("#simpanremark").click(function(){
+        // if($("#teks").val()==''){
+        //     alert('Noted harus di isi !');
+        //     $("#teks").focus();
+        //     return false;
+        // }    
+        // if($("#remark").val()==''){
+        //     alert('Remark Harus di isi !');
+        //     $("#remark").focus();
+        //     return false;
+        // }
         $.ajax({
             dataType: "json",
             type: "POST",
-            url: base_url + "hikiai/simpanhikiai",
+            url: base_url + "hikiai/simpanremarkhikiai",
             data: {
-                exdo: $("#select-tipe").val(),
-                kode: $("#kode").val(),
-                nomor: $("#nomor").val(),
-                tgl: $("#tgl_hikiai").val(),
-                idc: $("#idcustomer").val(),
-                peri: $("#perihal").val(),
-                kepa: $("#kepada").val(),
-                kete: $("#keterangan").val()
+                idhik: $("#idhik").val(),
+                idrem: $("#idremark").val(),
+                rem: $("#teks").val(),
+                teks: $("#remark").val(),
             },
             success: function (data) {
-                window.location.href = base_url+'hikiai/edithikiai/'+data;
+                window.location.href = base_url+'hikiai/edithikiai/'+$("#idhik").val();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);

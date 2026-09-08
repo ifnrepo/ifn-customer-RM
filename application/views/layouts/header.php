@@ -12,11 +12,12 @@
     <link href="<?= base_url().'assets/src' ?>/css/tabler-payments.min.css?1692870487" rel="stylesheet"/>
     <link href="<?= base_url().'assets/src' ?>/css/tabler-vendors.min.css?1692870487" rel="stylesheet"/>
     <link href="<?= base_url().'assets/src' ?>/css/demo.min.css?1692870487" rel="stylesheet"/>
+    <link href="<?= base_url().'assets/src' ?>/libs/toast/jquery.toast.min.css?1692870487" rel="stylesheet"/>
     
     <link href="<?= base_url().'assets/css' ?>/vendor/tom-select.css?1692870487" rel="stylesheet"/>
     
-    <link href="<?= base_url().'assets/css' ?>/own-style.css?1692870487" rel="stylesheet"/>
     <link href="<?= base_url().'assets/css' ?>/vendor/fontawesome/css/fontawesome.min.css?1692870487" rel="stylesheet"/>
+    <link href="<?= base_url().'assets/css' ?>/own-style.css?1692870487" rel="stylesheet"/>
     <style>
       .ui-autocomplete {
         z-index: 99999 !important;
@@ -52,6 +53,28 @@
   </head>
   <body >
     <script src="<?= base_url().'assets/src' ?>/js/demo-theme.min.js?1692870487"></script>
+    <!-- Canvas -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="canvasdet" aria-labelledby="offcanvasEndLabel" style="min-width:75% !important">
+      <div class="offcanvas-header">
+        <div class="offcanvas-title font-bold" id="offcanvasEndLabel">Lorem Title</div>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="fetched-data">
+          <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab assumenda ea est, eum exercitationem fugiat illum itaque laboriosam magni necessitatibus, nemo nisi numquam quae reiciendis repellat sit soluta unde. Aut! -->
+          <div class="text-center p-5" style="font-size: 20px;">
+            <div class="spinner-border spinner-border text-teal text-center" role="status"></div> LOADING...
+          </div>
+        </div>
+        <hr class="m-0 mt-1">
+        <div class="mt-3 text-right">
+          <button class="btn btn-primary btn-sm btn-flat" type="button" data-bs-dismiss="offcanvas">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- End Canvas -->
     <!-- Kummpulan Modal -->
     <div class="modal modal-blur fade" id="modal-simple" role="dialog" data-backdrop="static" data-keyboard="false" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
@@ -409,3 +432,5 @@
         </header>
       </div>
       <div class="page-wrapper">
+      <input type="hidden" name="jeniserror" id="jeniserror" value="<?= $this->session->flashdata('jeniserror'); ?>">
+      <input type="hidden" name="pesanerror" id="pesanerror" value="<?= $this->session->flashdata('pesanerror'); ?>">
