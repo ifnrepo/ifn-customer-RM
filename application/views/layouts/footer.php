@@ -35,6 +35,7 @@
     <!-- Tabler Core -->
     <script src="<?= base_url().'assets/src' ?>/js/tabler.min.js?1692870487" defer></script>
     <script src="<?= base_url().'assets/src' ?>/js/demo.min.js?1692870487" defer></script>
+    <script src="<?= base_url().'assets/src' ?>/libs/toast/jquery.toast.min.js?1692870487" defer></script>
     <script src="<?= base_url().'assets' ?>/js/vendor/tom-select.complete.js?1692870487" defer></script>
 	<?php if (ENVIRONMENT != 'development') { ?>
 		<script>

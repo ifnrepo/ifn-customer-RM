@@ -2,6 +2,20 @@ $(document).ready(function(){
     // alert('XXXX');
     // $("#select-tipe").change();
 });
+$("#bulan-hik").on('change',function(){
+    $("#select-tipe").change();
+})
+$("#tahun-hik").on('blur',function(){
+    $("#select-tipe").change();
+})
+$('#tahun-hik').on('keypress', function(e) {
+    if (e.which == 13) {
+		$("#select-tipe").change();
+    }
+});
+$("#updatehikiai").click(function(){
+    $("#select-tipe").change();
+})
 $("#select-tipe").on('change',function(){
     var isi = $(this).val();
     if(isi==''){
@@ -15,6 +29,8 @@ $("#select-tipe").on('change',function(){
         url: base_url + "hikiai/addsession",
         data: {
             tipe: isi,
+            bul: $("#bulan-hik").val(),
+            tah: $("#tahun-hik").val(),
         },
         success: function (data) {
             // alert(data);
@@ -67,9 +83,3 @@ $("#btncariproduk").click(function(){
         },
     });
 })
-
-$('#textcariproduk').on('keypress', function(e) {
-    if (e.which == 13) {
-		$("#btncariproduk").click();
-    }
-});

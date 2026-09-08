@@ -55,7 +55,7 @@
                                             <option value="12" <?php if($this->session->userdata('bulan-hik')==12){ echo "selected"; } ?>>Desember</option>
                                         </select>
                                         <input type="text" name="tahun-hik" id="tahun-hik" class="form-control font-kecil me-1" value="<?= $this->session->userdata('tahun-hik') ?>">
-                                        <a href="#" class="btn btn-sm btn-success">Update</a>
+                                        <a href="#" class="btn btn-sm btn-success" id="updatehikiai">Update</a>
                                     </div>
                                     <?php $cekdisable = $this->session->userdata('kode-hikiai')!='' ? '' : 'disabled'; ?>
                                     <a href="<?= base_url().'hikiai\tambahdata' ?>" id="btntambahhikiai" data-bs-toggle="modal" data-bs-target="#modal-large-loading" data-title="Add Hikiai" class="btn btn-sm btn-primary mt-1 w-75 font-kecil <?= $cekdisable ?>">Tambah Data</a>
@@ -125,7 +125,7 @@
                                         $badgestat = 'badge badge-outline text-pink';
                                         break;
                                     case 3:
-                                        $strstat = 'Hitung PPIC';
+                                        $strstat = 'Proses Hitung PPIC '."\r\n".' X';
                                         $badgestat = 'badge bg-pink text-pink-fg';
                                         break;
                                     case 4:
@@ -148,18 +148,25 @@
                                 <tr>
                                     <td class="text-center">#<?= $no ?></td>
                                     <td class="font-kecil line-11"><span class="text-pink font-10"><?= tglmysql($dt['tgl_hikiai']) ?></span><br><?= $dt['kode'] ?></td>
-                                    <td class="font-kecil"><?= $dt['nomor'] ?></td>
+                                    <?php if($dt['status_hikiai']!=0): ?>
+                                        <td class="font-kecil"><a href="<?= base_url().'hikiai/viewdetail/'.$dt['id'] ?>" data-bs-toggle="offcanvas" data-bs-target="#canvasdet" data-title="View Detail Hikiai"><?= $dt['nomor'] ?></a></td>
+                                    <?php else: ?>
+                                        <td class="font-kecil"><?= $dt['nomor'] ?></td>
+                                    <?php endif; ?>
                                     <td class="font-kecil"><?= $dt['nama_customer'] ?></td>
                                     <td class="font-kecil"><?= $dt['perihal'] ?></td>
                                     <td class="text-end"><?= rupiah($dt['pcs'],0) ?></td>
                                     <td class="text-end"><?= rupiah($dt['kgs'],2) ?></td>
                                     <td class="font-kecil text-center"><span class="<?= $badgestat ?>"><?= $strstat ?></span></td>
-                                    <td class="text-center font-kecil">
+                                    <td class="text-center font-kecil line-12">
                                         <?php if($dt['status_hikiai']==0){ ?>
                                             <a href="<?= base_url().'hikiai/edithikiai/'.$dt['id'] ?>" class="btn btn-primary btn-sm font-10">Edit</a>
+                                            <a href="#" data-href="<?= base_url().'hikiai/hapushikiai/'.$dt['id'] ?>" class="btn btn-danger btn-sm font-10" data-bs-toggle="modal" data-bs-target="#modal-danger" data-message="Anda akan menghapus data ini">Hapus</a>
                                         <?php }elseif($dt['status_hikiai']==1){ ?>
-                                            <a href="#" data-href="<?= base_url().'hikiai/editbatalhikiai/'.$dt['id'] ?>" data-bs-toggle="modal" data-bs-target="#modal-info" data-message="Akan mengedit data ini" class="btn btn-primary btn-sm font-10">Edit</a>
-                                            <a href="#" data-href="<?= base_url().'hikiai/kirimppic/'.$dt['id'] ?>" data-bs-toggle="modal" data-bs-target="#modal-info" data-message="Kirim ke PPIC untuk Hitung Delivery Time" class="btn btn-success btn-sm font-10">Kirim PPIC</a>
+                                            <a href="#" data-href="<?= base_url().'hikiai/editbatalhikiai/'.$dt['id'] ?>" data-bs-toggle="modal" data-bs-target="#modal-info" data-message="Akan mengedit data ini" class="btn btn-primary btn-sm font-10 line-11" title="<?= 'Dibuat :'.datauser($dt['dibuat_oleh'])."\r\n".'Pada :'.tglmysql2($dt['dibuat_pada']) ?>">Edit</a>
+                                            <a href="#" data-href="<?= base_url().'hikiai/kirimppic/'.$dt['id'] ?>" data-bs-toggle="modal" data-bs-target="#modal-info" data-message="Kirim ke PPIC untuk Hitung Delivery Time" class="btn btn-success btn-sm font-10 line-11">Kirim PPIC</a>
+                                        <?php }elseif($dt['status_hikiai']==2){ ?>
+                                            <span class="text-primary">Menunggu diterima<br>PPIC</span>
                                         <?php } ?>
                                     </td>
                                 </tr>

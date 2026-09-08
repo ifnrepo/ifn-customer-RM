@@ -24,7 +24,7 @@ $(document).ready(function () {
 	$(".onprogress").click(function () {
 		pesan("Dalam tahap pembuatan, Tunggu konfirmasi !", "info");
 	});
-	var errosimpan = $("#errorsimpan").val();
+	var errosimpan = $("#jeniserror").val();
 	var xpesan = $("#pesanerror").val();
 	if (errosimpan == 1) {
 		pesan("PESAN : "+xpesan, "info");

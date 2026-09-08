@@ -148,10 +148,6 @@
             alert('Jumlah PCS harus di isi !');
             return false;
         }
-        if($("#kgs").val()=='' || $("#kgs").val()=='0' || $("#kgs").val()=='-'){
-            alert('Jumlah KGS harus di isi !');
-            return false;
-        }
         $.ajax({
             dataType: "json",
             type: "POST",
@@ -236,7 +232,6 @@
             alert('Kode Hikiai Harus di isi !');
             return false;
         }
-        alert('XX');
         if($("#nomor").val()==''){
             alert('Nomor Hikiai Harus di isi !');
             return false;

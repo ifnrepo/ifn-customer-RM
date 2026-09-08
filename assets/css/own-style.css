@@ -80,6 +80,12 @@
 .btn-sm {
 	padding: 6px 8px !important;
 }
+.btn-sm-own {
+	padding: 6px 8px !important;
+}
+.btn-smx {
+	padding: 2px 8px !important;
+}
 .hilang {
 	display: none !important;
 }
