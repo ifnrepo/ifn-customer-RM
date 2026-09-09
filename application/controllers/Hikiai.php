@@ -50,19 +50,23 @@ class Hikiai extends CI_Controller {
 	}
 	public function addsession(){
 		$tipe = isset($_POST['tipe']) ? $_POST['tipe'] : 0;
-		$bulan = isset($_POST['bul']) ? $_POST['bul'] : date('m');
+		$bulan = isset($_POST['bul']) ? $_POST['bul'] : '';
 		$tahun = isset($_POST['tah']) ? $_POST['tah'] : date('Y');
 		if($tipe!=0){
 			$this->session->set_userdata('kode-hikiai',$tipe);
 		}else{
 			$this->session->unset_userdata('kode-hikiai');
 		}
-		$this->session->set_userdata('bulan-hik',$bulan);
+		if($bulan==''){
+			$this->session->unset_userdata('bulan-hik');
+		}else{
+			$this->session->set_userdata('bulan-hik',$bulan);
+		}
 		$this->session->set_userdata('tahun-hik',$tahun);
 		echo 1;
 	}
 	public function tambahdata(){
-		$this->load->view('hikiai\addhikiai');
+		$this->load->view('hikiai/addhikiai');
 	}
 	public function getdatacustomer(){
 		$kode = $_POST['isi'];
@@ -150,14 +154,14 @@ class Hikiai extends CI_Controller {
 		$data = [
 			'satuan' => $this->hikiaimodel->getsatuan()
 		];
-		$this->load->view('hikiai\adddetailhikiai',$data);
+		$this->load->view('hikiai/adddetailhikiai',$data);
 	}
 	public function editdetailhikiai($id){
 		$data = [
 			'data' => $this->hikiaimodel->getdetailhikiaibyid($id),
 			'satuan' => $this->hikiaimodel->getsatuan()
 		];
-		$this->load->view('hikiai\editdetailhikiai',$data);
+		$this->load->view('hikiai/editdetailhikiai',$data);
 	}
 	public function simpandetailhikiai(){
 		$data = [
@@ -209,7 +213,7 @@ class Hikiai extends CI_Controller {
 			'data' => $this->hikiaimodel->getdatabyid($id),
 			'datadetail' => $this->hikiaimodel->getdatadetail($id)
 		];
-		$this->load->view('hikiai\viewdetail',$data);
+		$this->load->view('hikiai/viewdetail',$data);
 	}
 	public function kirimppic($id){
 		$qry = $this->hikiaimodel->kirimppic($id);
@@ -224,7 +228,7 @@ class Hikiai extends CI_Controller {
 			'idhik' => $hik,
 			'data' => $this->hikiaimodel->getremarkbyid($id,$hik)
 		];
-		$this->load->view('hikiai\addremark',$data);
+		$this->load->view('hikiai/addremark',$data);
 	}
 	public function simpanremarkhikiai(){
 		$data = [ 

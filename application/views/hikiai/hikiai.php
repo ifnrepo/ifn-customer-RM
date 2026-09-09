@@ -125,7 +125,7 @@
                                         $badgestat = 'badge badge-outline text-pink';
                                         break;
                                     case 3:
-                                        $strstat = 'Proses Hitung PPIC '."\r\n".' X';
+                                        $strstat = 'Proses Hitung PPIC '."\r\n";
                                         $badgestat = 'badge bg-pink text-pink-fg';
                                         break;
                                     case 4:
