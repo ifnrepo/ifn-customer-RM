@@ -76,7 +76,9 @@ class Hikiaimodel extends CI_Model
         if($kode!=''){
             $this->db->where('tb_hikiai.exdo',$kode);
         }
-        $this->db->where('month(tgl_hikiai)',$this->session->userdata('bulan-hik'));
+        if($this->session->has_userdata('bulan-hik') && $this->session->userdata('bulan-hik')!=''){
+            $this->db->where('month(tgl_hikiai)',$this->session->userdata('bulan-hik'));
+        }
         $this->db->where('year(tgl_hikiai)',$this->session->userdata('tahun-hik'));
         $this->db->order_by('tb_hikiai.id');
         $this->db->limit($limit,$start);

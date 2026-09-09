@@ -23,7 +23,6 @@
                             </span>
                         </div>
                     </div>
-                    
                 </div>
                 <div class="row mt-1">
                     <label class="col-3 col-form-label">Hikiai</label>

@@ -7,17 +7,18 @@
     <title>CRM Indoneptune Net Manufacturing</title>
     <link href="<?= base_url(); ?>assets/favicon.ico" rel="icon">
     <!-- CSS files -->
-    <link href="<?= base_url().'assets/src' ?>/css/tabler.min.css?1692870487" rel="stylesheet"/>
-    <link href="<?= base_url().'assets/src' ?>/css/tabler-flags.min.css?1692870487" rel="stylesheet"/>
-    <link href="<?= base_url().'assets/src' ?>/css/tabler-payments.min.css?1692870487" rel="stylesheet"/>
-    <link href="<?= base_url().'assets/src' ?>/css/tabler-vendors.min.css?1692870487" rel="stylesheet"/>
-    <link href="<?= base_url().'assets/src' ?>/css/demo.min.css?1692870487" rel="stylesheet"/>
-    <link href="<?= base_url().'assets/src' ?>/libs/toast/jquery.toast.min.css?1692870487" rel="stylesheet"/>
+     <?php $updatetime = '1692870488'; ?>
+    <link href="<?= base_url().'assets/src' ?>/css/tabler.min.css?<?= $updatetime ?>" rel="stylesheet"/>
+    <link href="<?= base_url().'assets/src' ?>/css/tabler-flags.min.css?<?= $updatetime ?>" rel="stylesheet"/>
+    <link href="<?= base_url().'assets/src' ?>/css/tabler-payments.min.css?<?= $updatetime ?>" rel="stylesheet"/>
+    <link href="<?= base_url().'assets/src' ?>/css/tabler-vendors.min.css?<?= $updatetime ?>" rel="stylesheet"/>
+    <link href="<?= base_url().'assets/src' ?>/css/demo.min.css?<?= $updatetime ?>" rel="stylesheet"/>
+    <link href="<?= base_url().'assets/src' ?>/libs/toast/jquery.toast.min.css?<?= $updatetime ?>" rel="stylesheet"/>
     
-    <link href="<?= base_url().'assets/css' ?>/vendor/tom-select.css?1692870487" rel="stylesheet"/>
+    <link href="<?= base_url().'assets/css' ?>/vendor/tom-select.css?<?= $updatetime ?>" rel="stylesheet"/>
     
-    <link href="<?= base_url().'assets/css' ?>/vendor/fontawesome/css/fontawesome.min.css?1692870487" rel="stylesheet"/>
-    <link href="<?= base_url().'assets/css' ?>/own-style.css?1692870487" rel="stylesheet"/>
+    <link href="<?= base_url().'assets/css' ?>/vendor/fontawesome/css/fontawesome.min.css?<?= $updatetime ?>" rel="stylesheet"/>
+    <link href="<?= base_url().'assets/css' ?>/own-style.css?<?= $updatetime ?>" rel="stylesheet"/>
     <style>
       .ui-autocomplete {
         z-index: 99999 !important;
