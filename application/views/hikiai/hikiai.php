@@ -97,6 +97,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>#</th>
                             <th>Nomor</th>
                             <th>Nomor Hikiai</th>
                             <th>Customer</th>
@@ -147,6 +148,7 @@
                              ?>
                                 <tr>
                                     <td class="text-center">#<?= $no ?></td>
+                                    <td class="text-center"><?php if($dt['exdo']=='Domestic'){ echo 'DO'; }else{ echo 'EX'; } ?></td>
                                     <td class="font-kecil line-11"><span class="text-pink font-10"><?= tglmysql($dt['tgl_hikiai']) ?></span><br><?= $dt['kode'] ?></td>
                                     <?php if($dt['status_hikiai']!=0): ?>
                                         <td class="font-kecil"><a href="<?= base_url().'hikiai/viewdetail/'.$dt['id'] ?>" data-bs-toggle="offcanvas" data-bs-target="#canvasdet" data-title="View Detail Hikiai"><?= $dt['nomor'] ?></a></td>
@@ -167,6 +169,8 @@
                                             <a href="#" data-href="<?= base_url().'hikiai/kirimppic/'.$dt['id'] ?>" data-bs-toggle="modal" data-bs-target="#modal-info" data-message="Kirim ke PPIC untuk Hitung Delivery Time" class="btn btn-success btn-sm font-10 line-11">Kirim PPIC</a>
                                         <?php }elseif($dt['status_hikiai']==2){ ?>
                                             <span class="text-primary">Menunggu diterima<br>PPIC</span>
+                                        <?php }elseif($dt['status_hikiai']==4){ ?>
+                                            <a href="<?= base_url().'hikiai/viewhitunghikiai/'.$dt['id'] ?>" class="btn btn-primary btn-sm font-10 line-11">View Hikiai</a>
                                         <?php } ?>
                                     </td>
                                 </tr>

@@ -251,4 +251,9 @@ class Hikiaimodel extends CI_Model
         $this->db->where('id',$hik);
         return $this->db->get()->row_array();
     }
+    public function getdatahikiaieps($id){
+        $this->db->where('tb_hikiai_eps.id_hikiai',$id);
+        $this->db->order_by('tb_hikiai_eps.item');
+        return $this->db->get('tb_hikiai_eps');
+    }
 }

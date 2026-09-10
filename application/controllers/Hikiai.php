@@ -240,4 +240,20 @@ class Hikiai extends CI_Controller {
 
 		echo $this->hikiaimodel->simpanremarkhikiai($data);
 	}
+	public function viewhitunghikiai($id){
+		$header['header'] = [
+			'menu' => 'hikiai'
+		];
+		$data = [
+			'data' => $this->hikiaimodel->getdatabyid($id),
+			'datadetail' => $this->hikiaimodel->getdatadetail($id),
+			'dataeps' => $this->hikiaimodel->getdatahikiaieps($id),
+		];
+		$footer['footer'] = [
+			'menu' => 'hikiai'
+		];
+		$this->load->view('layouts/header',$header);
+		$this->load->view('hikiai/viewhikiai',$data);
+		$this->load->view('layouts/footer',$footer);
+	}
 }
