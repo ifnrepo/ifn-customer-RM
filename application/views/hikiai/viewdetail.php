@@ -108,13 +108,14 @@
                 </thead>
                 <tbody class="table-tbody">
                     <?php $jmlrek = 0; $jmlpcs=0; $jmlkgs=0; foreach($datadetail->result_array() as $det): $jmlrek++; $jmlpcs += $det['pcs']; $jmlkgs += $det['kgs']; ?>
+                    <?php $deltime = $data['status_hikiai'] > 3 ? '<a href="#" data-bs-toggle="modal" data-bs-target="#modal-info">'.limitmp($det['tgl_dt']).'</a>' : '-'; ?>
                         <tr>
                             <td class="font-kecil text-center font-bold">#<?= $det['item'] ?></td>
                             <td class="font-kecil"><?= $det['spesifikasi'] ?></td>
                             <td class="font-kecil"><?= $det['kodesatuan'] ?></td>
                             <td class="font-kecil text-end"><?= rupiah($det['pcs'],0) ?></td>
                             <td class="font-kecil text-end"><?= rupiah($det['kgs'],2) ?></td>
-                            <td class="font-kecil text-red">-</td>
+                            <td class="font-kecil text-red"><?= $deltime ?></td>
                         </tr>
                     <?php endforeach; ?>
                     <tr>
