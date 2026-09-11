@@ -459,7 +459,7 @@
             }
         }
         if($("#color").val()!=''){
-            col = ' - '+$("#color").val();
+            col = ' - '+$("#color").val().trim();
         }
         if($("#ways").val()!=''){
             ways = ' '+$("#ways").val();

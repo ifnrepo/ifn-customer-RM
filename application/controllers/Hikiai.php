@@ -42,7 +42,23 @@ class Hikiai extends CI_Controller {
 		$this->load->view('layouts/footer',$footer);
 	}
 	public function clear(){
-		$this->session->unset_userdata('kode-hikiai');
+		$datauser = datauser($this->session->userdata('id'),'rolecrm');
+		if($datauser > 2){
+			$this->session->unset_userdata('kode-hikiai');
+		}else{
+			switch ($datauser) {
+				case 1:
+					$exdo = "Domestic";
+					break;
+				case 2:
+					$exdo = "Export";
+					break;
+				default:
+					# code...
+					break;
+			}
+			$this->session->set_userdata('kode-hikiai',$exdo);
+		}
 		$this->session->set_userdata('bulan-hik',date('m'));
 		$this->session->set_userdata('tahun-hik',date('Y'));
 		$url = base_url().'hikiai';
@@ -211,7 +227,8 @@ class Hikiai extends CI_Controller {
 	public function viewdetail($id){
 		$data = [
 			'data' => $this->hikiaimodel->getdatabyid($id),
-			'datadetail' => $this->hikiaimodel->getdatadetail($id)
+			'datadetail' => $this->hikiaimodel->getdatadetail($id),
+			'dataeps' => $this->hikiaimodel->getdatahikiaieps($id)
 		];
 		$this->load->view('hikiai/viewdetail',$data);
 	}
@@ -255,5 +272,31 @@ class Hikiai extends CI_Controller {
 		$this->load->view('layouts/header',$header);
 		$this->load->view('hikiai/viewhikiai',$data);
 		$this->load->view('layouts/footer',$footer);
+	}
+	public function jawabeps($id,$hik){
+		$this->load->view('hikiai/pilihjawabeps',['id' => $id,'hik' => $hik]);
+	}
+	public function simpandatajawabeps($id){
+		$qry = $this->hikiaimodel->simpandatajawabeps($id);
+		if($qry){
+			$url = base_url().'hikiai/viewhitunghikiai/'.$id;
+			redirect($url);
+		}
+	}
+	public function resetdatajawabeps($id){
+		$qry = $this->hikiaimodel->resetdatajawabeps($id);
+		if($qry){
+			$url = base_url().'hikiai/viewhitunghikiai/'.$id;
+			redirect($url);
+		}
+	}
+	public function simpandetailjawabeps(){
+		$data = [
+			'id' => $_POST['id'],
+			'stat' => $_POST['stathik'],
+			'ket_stat' => trim($_POST['kete'])
+		];
+		$qry = $this->hikiaimodel->simpandetailjawabeps($data);
+		echo $qry;
 	}
 }

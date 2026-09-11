@@ -73,16 +73,16 @@
         <tbody class="table-tbody">
             <?php if(trim($data['remark_1'])!='' || trim($data['remark_2'])!='' || trim($data['remark_3'])!='' || trim($data['remark_4'])!=''): ?>
                 <tr>
-                    <td class="font-kecil font-bold text-end"><?= $data['remark_1'] ?></td>
-                    <td class="font-kecil" style="white-space: pre-line;"><?= $data['remark_teks_1'] ?></td>
-                    <td class="font-kecil font-bold text-end"><?= $data['remark_2'] ?></td>
-                    <td class="font-kecil" style="white-space: pre-line;"><?= $data['remark_teks_2'] ?></td>
+                    <td class="font-10 font-bold text-end"><?= $data['remark_1'] ?></td>
+                    <td class="font-10" style="white-space: pre-line;"><?= $data['remark_teks_1'] ?></td>
+                    <td class="font-10 font-bold text-end"><?= $data['remark_2'] ?></td>
+                    <td class="font-10" style="white-space: pre-line;"><?= $data['remark_teks_2'] ?></td>
                 </tr>
                 <tr> 
-                    <td class="font-kecil font-bold text-end"><?= $data['remark_3'] ?></td>
-                    <td class="font-kecil" style="white-space: pre-line;"><?= $data['remark_teks_3'] ?></td>
-                    <td class="font-kecil font-bold text-end"><?= $data['remark_4'] ?></td>
-                    <td class="font-kecil" style="white-space: pre-line;"><?= $data['remark_teks_4'] ?></td>
+                    <td class="font-10 font-bold text-end"><?= $data['remark_3'] ?></td>
+                    <td class="font-10" style="white-space: pre-line;"><?= $data['remark_teks_3'] ?></td>
+                    <td class="font-10 font-bold text-end"><?= $data['remark_4'] ?></td>
+                    <td class="font-10" style="white-space: pre-line;"><?= $data['remark_teks_4'] ?></td>
                 </tr>
             <?php else: ?>
                 <tr>
@@ -117,6 +117,32 @@
                             <td class="font-kecil text-end"><?= rupiah($det['kgs'],2) ?></td>
                             <td class="font-kecil text-red"><?= $deltime ?></td>
                         </tr>
+                        <?php if($data['status_hikiai']==5): foreach($dataeps->result_array() as $deps): if($det['id']==$deps['id_hikiai_detail']): ?>
+                            <tr>
+                                <td class="text-end">-</td>
+                                <td colspan="5" class="font-10 line-11">
+                                    <div style="float: left;">
+                                        <span class="font-bold bg-yellow-lt"><span class="text-black">EPS NOTE</span></span><br>
+                                        Mach No.<span class="text-red font-10"><?= $deps['machno'] ?></span><br>
+                                        Net Prod. <span class="text-red font-10"><?= tglmysql($deps['tgl_mulai']).' s/d '.tglmysql($deps['tgl_akhir']) ?></span><span class="font-10 text-primary"> (<?= hitunghari($deps['tgl_mulai'],$deps['tgl_akhir']) ?> Hari)</span><br>
+                                        Est Masuk Gudang. <span class="text-red font-10"><?= tglmysql($deps['tgl_kirim_gudang']) ?></span><br>
+                                    </div>
+                                    <div class="text-end" style="float: right;">
+                                        <?php if($deps['stat']==0): ?>
+                                        <a href="<?= base_url().'hikiai/jawabeps/'.$deps['id'].'/'.$data['id'] ?>" class="btn btn-smx btn-success btn-flat font-10" data-bs-toggle="modal" data-bs-target="#modal-simple" data-title="Jawab EPS">Jawab EPS</a>
+                                        <?php elseif($deps['stat']==1): ?>
+                                            <span class="badge bg-blue text-blue-fg">Setuju PO</span><br>
+                                            <span><?= $deps['ket_stat'] ?></span><br>
+                                            <?= 'Oleh .'.datauser($deps['stat_oleh']) ?><br>
+                                            <?= 'Pada .'.tglmysql2($deps['stat_pada']) ?>
+                                        <?php else: ?>
+                                            <span class="badge badge-outline text-red">Cancel</span><br>
+                                            <span><?= $deps['ket_stat'] ?></span>
+                                        <?php endif; ?>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endif; endforeach; endif; ?>
                     <?php endforeach; ?>
                     <tr>
                         <td class="font-kecil text-center"> Total Item : <?= $jmlrek ?></td>
