@@ -14,7 +14,8 @@
                 <div class="mb-0 row">
                     <label class="col-5 col-form-label font-kecil">Exp/Dom</label>
                     <div class="col">
-                        <select class="form-select font-kecil" id="select-tipe" name="select-tipe">
+                        <?php $iduser = datauser($this->session->userdata('id'),'rolecrm'); ?>
+                        <select class="form-select font-kecil" id="select-tipe" name="select-tipe" <?php if($iduser <= 2){ echo "disabled"; } ?>>
                         <option value="">All</option>
                         <option value="Export" <?php if($this->session->userdata('kode-hikiai')=='Export'){ echo "selected"; } ?>>Export</option>
                         <option value="Domestic" <?php if($this->session->userdata('kode-hikiai')=='Domestic'){ echo "selected"; } ?>>Domestic</option>
@@ -134,10 +135,18 @@
                                         $badgestat = 'badge bg-green text-green-fg';
                                         break;
                                     case 5:
-                                        $strstat = 'Closed';
-                                        $badgestat = 'badge';
+                                        $strstat = 'Sudah dijawab Marketing';
+                                        $badgestat = 'badge bg-yellow text-black';
                                         break;
                                     case 6:
+                                        $strstat = 'Proses Produksi';
+                                        $badgestat = 'badge bg-azure text-azure-fg';
+                                        break;
+                                    case 6:
+                                        $strstat = 'Close';
+                                        $badgestat = 'badge bg-azure text-azure-fg';
+                                        break;
+                                    case 99:
                                         $strstat = 'Cancel';
                                         $badgestat = 'badge bg-red text-red-fg';
                                         break;
@@ -148,7 +157,7 @@
                              ?>
                                 <tr>
                                     <td class="text-center">#<?= $no ?></td>
-                                    <td class="text-center"><?php if($dt['exdo']=='Domestic'){ echo 'DO'; }else{ echo 'EX'; } ?></td>
+                                    <td class="text-center <?php if($dt['exdo']=='Domestic'){ echo 'text-cyan'; }else{ echo 'text-primary'; } ?>"><?php if($dt['exdo']=='Domestic'){ echo 'DO'; }else{ echo 'EX'; } ?></td>
                                     <td class="font-kecil line-11"><span class="text-pink font-10"><?= tglmysql($dt['tgl_hikiai']) ?></span><br><?= $dt['kode'] ?></td>
                                     <?php if($dt['status_hikiai']!=0): ?>
                                         <td class="font-kecil"><a href="<?= base_url().'hikiai/viewdetail/'.$dt['id'] ?>" data-bs-toggle="offcanvas" data-bs-target="#canvasdet" data-title="View Detail Hikiai"><?= $dt['nomor'] ?></a></td>
@@ -177,7 +186,7 @@
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="9" class="text-center font-kecil">-- Tidak Ada Data --</td>
+                                <td colspan="10" class="text-center font-kecil">-- Tidak Ada Data --</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>

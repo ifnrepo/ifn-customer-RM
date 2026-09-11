@@ -97,8 +97,8 @@
                                     <td class="font-kecil line-11"><span class="font-10 text-cyan"><?= $dt['nama_kategori'] ?><br></span><?= $dt['kode'] ?></td>
                                     <td class="font-kecil"><?= $dt['spesifikasi'] ?></td>
                                     <td class="font-kecil"><?= $dt['keterangan'] ?></td>
-                                    <td class="font-kecil line-11">dibuat oleh:<br><span class="font-10 text-muted"><?= tglmysql2($dt['dibuat_pada']) ?></span></td>
-                                    <td class="font-kecil text-center">
+                                    <td class="font-10 line-11">dibuat: <?= substr(datauser($dt['dibuat']),0,9).'..' ?><br><span class="font-10 text-muted"><?= tglmysql2($dt['dibuat_pada']) ?></span></td>
+                                    <td class="font-kecil text-center text-nowrap">
                                         <a href="<?= base_url().'produk/editdata/'.$dt['id'] ?>" data-bs-toggle="modal" data-bs-target="#modal-large-loading" data-title="Edit Produk" class="btn btn-primary btn-flat py-1 font-10">Edit</a>
                                         <a href="#" data-href="<?= base_url().'produk/hapusdata/'.$dt['id'] ?>" data-bs-toggle="modal" data-bs-target="#modal-danger" data-message="Akan menghapus data ini" class="btn btn-danger btn-flat py-1 font-10">Hapus</a>
                                     </td>

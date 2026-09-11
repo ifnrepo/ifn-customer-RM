@@ -32,6 +32,7 @@ class produk_model extends CI_Model
         return $this->db->get('tb_color');
     }
     public function simpanjala($data){
+        $data['dibuat'] = $this->session->userdata('id');
         return $this->db->insert('tb_produk',$data);
     }
     public function editjala($data){

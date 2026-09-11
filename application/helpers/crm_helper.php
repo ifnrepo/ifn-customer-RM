@@ -386,8 +386,13 @@ function datauser($kode, $kolom='name')
         $kore = '';
     } else {
         $CI = &get_instance();
-        $kodex = $CI->usermodel->getdatabyid($kode)->row_array();
-        $kore = $kodex[$kolom];
+        $kodex = $CI->usermodel->getdatabyid($kode);
+        if($kodex->num_rows() > 0){
+            $koxed = $kodex->row_array();
+            $kore = $koxed[$kolom];
+        }else{
+            $kore = '-';
+        }
     }
     return $kore;
 }

@@ -126,15 +126,29 @@
                                                         <td class="font-kecil text-end"><?= rupiah($dtd['pcs'],0) ?></td>
                                                         <td class="font-kecil text-end"><?= rupiah($dtd['kgs'],2) ?></td>
                                                         <td class="font-kecil text-end"><?= rupiah($dtd['kgs']/$dtd['pcs'],2) ?></td>
-                                                        <td class="font-kecil text-center no-wrap font-bold"><?= limitmp($dtd['tgl_dt']) ?></td>
+                                                        <td class="font-kecil text-center no-wrap font-bold text-red"><?= limitmp($dtd['tgl_dt']) ?></td>
                                                     </tr>
                                                     <?php foreach($dataeps->result_array() as $deps): if($deps['id_hikiai_detail']==$dtd['id']): ?>
                                                         <tr>
                                                             <td></td>
                                                             <td class="font-10 line-11" colspan="6">
-                                                                Mach No.<span class="text-red font-10"><?= $deps['machno'] ?></span><br>
-                                                                Net Prod.<span class="text-red font-10"><?= $deps['tgl_mulai'].' s/d '.$deps['tgl_akhir'] ?></span><span class="font-10 text-primary"> (<?= hitunghari($deps['tgl_mulai'],$deps['tgl_akhir']) ?> Hari)</span><br>
-                                                                FN Process.<span class="text-red font-10"><?= $deps['tgl_akhir'].' s/d '.$deps['tgl_kirim_gudang'] ?></span><span class="font-10 text-primary"> (<?= hitunghari($deps['tgl_akhir'],$deps['tgl_kirim_gudang']) ?> Hari)<br>
+                                                                <div style="float: left;">
+                                                                    <span class="font-bold bg-yellow-lt"><span class="text-black">EPS NOTE</span></span><br>
+                                                                    Mach No.<span class="text-red font-10"><?= $deps['machno'] ?></span><br>
+                                                                    Net Prod. <span class="text-red font-10"><?= tglmysql($deps['tgl_mulai']).' s/d '.tglmysql($deps['tgl_akhir']) ?></span><span class="font-10 text-primary"> (<?= hitunghari($deps['tgl_mulai'],$deps['tgl_akhir']) ?> Hari)</span><br>
+                                                                    Est Masuk Gudang. <span class="text-red font-10"><?= tglmysql($deps['tgl_kirim_gudang']) ?></span><br>
+                                                                </div>
+                                                                <div class="text-end" style="float: right;">
+                                                                    <?php if($deps['stat']==0): ?>
+                                                                    <a href="<?= base_url().'hikiai/jawabeps/'.$deps['id'].'/'.$data['id'] ?>" class="btn btn-smx btn-success btn-flat font-10" data-bs-toggle="modal" data-bs-target="#modal-simple" data-title="Jawab EPS">Jawab EPS</a>
+                                                                    <?php elseif($deps['stat']==1): ?>
+                                                                        <span class="badge bg-blue text-blue-fg">Setuju PO</span><br>
+                                                                        <span><?= $deps['ket_stat'] ?></span>
+                                                                    <?php else: ?>
+                                                                        <span class="badge badge-outline text-red">Cancel</span><br>
+                                                                        <span><?= $deps['ket_stat'] ?></span>
+                                                                    <?php endif; ?>
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                     <?php endif; endforeach; ?>
@@ -150,6 +164,11 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="text-end <?php if($data['status_hikiai']>=5 && $data['status_hitung']==2){ echo "hilang"; } ?>">
+                    <hr class="m-1">
+                    <a href="#" data-href="<?= base_url().'hikiai/simpandatajawabeps/'.$data['id'] ?>" data-bs-toggle="modal" data-bs-target="#modal-info" data-title="Informasi" data-message="Akan menyimpan data ini" class="btn btn-sm btn-primary font-kecil"> Simpan Data Jawab EPS</a>
+                    <a href="#" data-href="<?= base_url().'hikiai/resetdatajawabeps/'.$data['id'] ?>" data-bs-toggle="modal" data-bs-target="#modal-danger" data-tombol="Reset" data-title="Informasi" data-message="Akan mereset data detail" class="btn btn-sm btn-danger font-kecil"> Reset Data Jawab EPS</a>
                 </div>
             </div>
         </div>

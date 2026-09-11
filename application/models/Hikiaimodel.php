@@ -80,7 +80,7 @@ class Hikiaimodel extends CI_Model
             $this->db->where('month(tgl_hikiai)',$this->session->userdata('bulan-hik'));
         }
         $this->db->where('year(tgl_hikiai)',$this->session->userdata('tahun-hik'));
-        $this->db->order_by('tb_hikiai.id');
+        $this->db->order_by('tb_hikiai.tgl_hikiai,tb_hikiai.id');
         $this->db->limit($limit,$start);
         return $this->db->get('tb_hikiai');
     }
@@ -255,5 +255,35 @@ class Hikiaimodel extends CI_Model
         $this->db->where('tb_hikiai_eps.id_hikiai',$id);
         $this->db->order_by('tb_hikiai_eps.item');
         return $this->db->get('tb_hikiai_eps');
+    }
+    public function simpandatajawabeps($id){
+        $this->db->trans_start();
+        $cekbelumjawab = $this->db->get_where('tb_hikiai_eps',['id_hikiai' => $id,'stat' => 0]);
+        if($cekbelumjawab->num_rows() > 0){
+            $this->session->set_flashdata('jeniserror',2);
+            $this->session->set_flashdata('pesanerror','Masih ada '.$cekbelumjawab->num_rows().' data yang belum dijawab !');
+        }else{
+            $this->db->where('id',$id);
+            $this->db->update('tb_hikiai',['status_hitung' => 2,'status_hikiai' => 5,'jawab_oleh' => $this->session->userdata('id'),'jawab_pada' => date('Y-m-d H:i:s')]);
+            $this->session->set_flashdata('jeniserror',1);
+            $this->session->set_flashdata('pesanerror','Data berhasil disimpan !');
+        }
+        return $this->db->trans_complete();
+    }
+    public function resetdatajawabeps($id){
+        $this->db->trans_start();
+        $this->db->where('id_hikiai',$id);
+		$this->db->update('tb_hikiai_eps',['stat' => 0,'ket_stat' => '','stat_pada' => NULL,'stat_oleh' => 0]);
+
+		$this->db->where('id',$id);
+		$this->db->update('tb_hikiai',['status_hitung' => 1,'jawab_oleh' => 0,'jawab_pada' => NULL]);
+
+        $this->session->set_flashdata('jeniserror',1);
+        $this->session->set_flashdata('pesanerror','Data berhasil di Reset !');
+        return $this->db->trans_complete();
+    }
+    public function simpandetailjawabeps($data){
+        $this->db->where('id',$data['id']);
+        return $this->db->update('tb_hikiai_eps',['stat' => $data['stat'],'ket_stat' => $data['ket_stat'],'stat_oleh' => $this->session->userdata('id'),'stat_pada' => date('Y-m-s H:i:s')]);
     }
 }
