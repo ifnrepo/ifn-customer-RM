@@ -84,6 +84,13 @@ class Hikiai extends CI_Controller {
 	public function tambahdata(){
 		$this->load->view('hikiai/addhikiai');
 	}
+	public function updateheaderhikiai($id){
+		$data = [
+			'data' => $this->hikiaimodel->getdatabyid($id),
+			'datadetail' => $this->hikiaimodel->getdatadetail($id)
+		];
+		$this->load->view('hikiai/updateheaderhikiai',$data);
+	}
 	public function getdatacustomer(){
 		$kode = $_POST['isi'];
 		$data = $this->hikiaimodel->getdatacustomer($kode);
@@ -135,6 +142,19 @@ class Hikiai extends CI_Controller {
 			'exdo' => $this->session->userdata('kode-hikiai')
 		];
 		$qry = $this->hikiaimodel->simpanhikiai($data);
+		echo $qry;
+	}
+	public function updatehikiai(){
+		$data = [
+			'kode' => strtoupper($_POST['kode']),
+			'tgl_hikiai' => tglmysql($_POST['tgl']),
+			'nomor' => strtoupper($_POST['nomor']),
+			'perihal' => trim($_POST['peri']),
+			'kepada' => trim($_POST['kepa']),
+			'remark' => trim($_POST['kete']),
+			'id' => $_POST['id']
+		];
+		$qry = $this->hikiaimodel->updatehikiai($data);
 		echo $qry;
 	}
 	public function simpandatahikiai($id){

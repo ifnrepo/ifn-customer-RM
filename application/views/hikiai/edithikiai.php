@@ -25,17 +25,22 @@
             <div class="card-body p-2">
                 <div class="row">
                     <div class="col-3">
-                        <h5 class="my-1">Data Hikiai</h5>
+                        <div class="d-flex mb-1">
+                            <h4 class="my-1">Data Hikiai</h4>
+                             <div class="ms-auto">
+                                <a href="<?= base_url().'hikiai/updateheaderhikiai/'.$data['id'] ?>" data-bs-toggle="modal" data-bs-target="#modal-large" data-title="Edit Header" class="btn btn-sm btn-info font-10">Edit HEADER</a>
+                            </div>
+                        </div>
                         <input type="text" name="idhik" id="idhik" class="hilang" value="<?= $data['id'] ?>">
                         <div class="card">
                             <div class="card-body p-1">
                                 <div class="mb-0">
                                     <label class="form-label font-kecil mb-0 ">Tgl/Kode</label>
-                                    <input type="text" class="form-control font-kecil text-uppercase font-bold mt-0" name="example-text-input" value="<?= $data['kode'].' ( '.tglmysql($data['tgl_hikiai']).' )' ?>">
+                                    <input type="text" class="form-control font-kecil text-uppercase font-bold mt-0 text-primary" name="example-text-input" value="<?= $data['kode'].' ( '.tglmysql($data['tgl_hikiai']).' )' ?>">
                                 </div>
                                 <div class="mt-2">
                                     <label class="form-label font-kecil mb-0">Nomor</label>
-                                    <input type="text" name="nomor" id="nomor" class="form-control font-kecil text-uppercase font-bold mt-0" value="<?= $data['nomor'] ?>">
+                                    <input type="text" name="nomor" id="nomor" class="form-control font-kecil text-uppercase font-bold mt-0 text-primary" value="<?= $data['nomor'] ?>">
                                 </div>
                                 <div class="mt-2">
                                     <label class="form-label font-kecil mb-0">Customer</label>
@@ -52,7 +57,7 @@
                                 </div>
                                 <div class="mt-1">
                                     <label class="form-label font-kecil mb-0">Keterangan</label>
-                                    <textarea class="form-control font-kecil mt-0" rows="6"><?= $data['remark'] ?></textarea>
+                                    <textarea class="form-control font-kecil mt-0" rows="4"><?= $data['remark'] ?></textarea>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +95,7 @@
                                                         <td class="font-kecil text-end"><?= rupiah($dtd['pcs'],0) ?></td>
                                                         <td class="font-kecil text-end"><?= rupiah($dtd['kgs'],2) ?></td>
                                                         <td class="font-kecil text-end"><?= rupiah($dtd['kgs']/$dtd['pcs'],2) ?></td>
-                                                        <td class="font-kecil text-center no-wrap">
+                                                        <td class="font-kecil text-center text-nowrap">
                                                             <a href="<?= base_url().'hikiai/editdetailhikiai/'.$dtd['id'] ?>" data-bs-toggle="modal" data-bs-target="#modal-large-loading" data-title="Edit detail Hikiai" class="btn btn-sm btn-primary font-10">Edit</a>
                                                             <a href="#" data-href="<?= base_url().'hikiai/hapusdetailhikiai/'.$dtd['id'].'/'.$dtd['id_hikiai'] ?>" data-bs-toggle="modal" data-bs-target="#modal-danger" data-message="Akan menghapus data ini" class="btn btn-sm btn-danger font-10">Hapus</a>
                                                         </td>
