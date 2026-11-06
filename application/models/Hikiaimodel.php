@@ -35,6 +35,12 @@ class Hikiaimodel extends CI_Model
         $this->db->insert('tb_hikiai',$data);
         return $this->db->insert_id();
     }
+    public function updatehikiai($data){
+        $id = $data['id'];
+        unset($data['id']);
+        $this->db->where('id',$id);
+        return $this->db->update('tb_hikiai',$data);
+    }
     public function editjala($data){
         // Cek kode terlebih dahulu 
         $this->db->where('trim(kode)',trim($data['kode']));

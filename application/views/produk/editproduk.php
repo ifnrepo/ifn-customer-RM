@@ -272,6 +272,9 @@
     $("#length").on('blur',function(){
         generatekode();
     })
+    $("#keterangan").on('blur',function(){
+        generatekode();
+    })
     $("#sat-length").change(function(){
         generatekode();
     })
@@ -400,7 +403,7 @@
         var stme = '';var tme = '';var tle = '';
         var md = '';
         var len = '';var strlen='';var lme = '';
-        var col = '';var ways='';
+        var col = '';var ways='';var ketr = '';
         if($("#knot-tipe").val()!=''){
             knot = $("#knot-tipe option:selected").text();
         }
@@ -467,7 +470,10 @@
         if($("#ways").val()!=''){
             ways = ' '+$("#ways").val();
         }
-        $("#speku").html(knot+' '+ukr+meai+tme+md+len+tle+col+ways);
+        if($("#keterangan").val()!=''){
+            ketr = ' '+$("#keterangan").val();
+        }
+        $("#speku").html(knot+' '+ukr+meai+tme+md+len+tle+col+ways+ketr);
     }
     function generatekodeother(){
         var knot = '';
